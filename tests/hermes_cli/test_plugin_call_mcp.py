@@ -1,0 +1,237 @@
+"""Tests for the capability-gated ``ctx.call_mcp`` plugin surface (#64204).
+
+The gate: ``plugins.entries.<plugin_id>.mcp_allowlist`` — a list of MCP
+server names. Absent key = no MCP access (default-deny). Calls to unlisted
+servers raise PermissionError naming the config key. All calls route
+through the existing tools.mcp_tool handler machinery (mocked here — no
+live MCP servers).
+"""
+
+import json
+from unittest.mock import MagicMock
+
+import pytest
+
+from hermes_cli.plugins import PluginContext, PluginManifest
+
+
+def _make_ctx(plugin_key: str = "my-plugin") -> PluginContext:
+    manifest = PluginManifest(name=plugin_key, key=plugin_key)
+    manager = MagicMock()
+    return PluginContext(manifest, manager)
+
+
+def _patch_config(monkeypatch, entries: dict) -> None:
+    import hermes_cli.config as config_mod
+
+    monkeypatch.setattr(
+        config_mod, "load_config",
+        lambda *a, **k: {"plugins": {"entries": entries}},
+    )
+
+
+def _patch_handler(monkeypatch, response: str, captured: dict | None = None):
+    """Replace tools.mcp_tool_handlers._make_tool_handler with a transport mock."""
+    from tools import mcp_tool_handlers as _mcp_handlers
+
+    def _fake_make_handler(server_name, tool_name, tool_timeout):
+        if captured is not None:
+            captured["server"] = server_name
+            captured["tool"] = tool_name
+            captured["timeout"] = tool_timeout
+
+        def _handler(args, **kwargs):
+            if captured is not None:
+                captured["args"] = args
+            return response
+
+        return _handler
+
+    monkeypatch.setattr(_mcp_handlers, "_make_tool_handler", _fake_make_handler)
+
+
+# ---------------------------------------------------------------------------
+# Default-deny and allowlist enforcement
+# ---------------------------------------------------------------------------
+
+
+def test_default_deny_when_key_absent(monkeypatch):
+    _patch_config(monkeypatch, {"my-plugin": {}})
+    ctx = _make_ctx()
+    with pytest.raises(PermissionError) as exc:
+        ctx.call_mcp("github", "create_issue", {"title": "x"})
+    # Error message names the exact config key the operator must set.
+    assert "plugins.entries.my-plugin.mcp_allowlist" in str(exc.value)
+    assert "github" in str(exc.value)
+
+
+def test_default_deny_when_plugin_has_no_entry(monkeypatch):
+    _patch_config(monkeypatch, {})
+    ctx = _make_ctx()
+    with pytest.raises(PermissionError):
+        ctx.call_mcp("github", "create_issue")
+
+
+def test_default_deny_when_config_unreadable(monkeypatch):
+    import hermes_cli.config as config_mod
+
+    def _boom(*a, **k):
+        raise OSError("config torn mid-edit")
+
+    monkeypatch.setattr(config_mod, "load_config", _boom)
+    ctx = _make_ctx()
+    with pytest.raises(PermissionError):
+        ctx.call_mcp("github", "create_issue")
+
+
+def test_unlisted_server_denied_even_with_other_grants(monkeypatch):
+    _patch_config(
+        monkeypatch, {"my-plugin": {"mcp_allowlist": ["knowledge_rag"]}}
+    )
+    ctx = _make_ctx()
+    with pytest.raises(PermissionError) as exc:
+        ctx.call_mcp("github", "create_issue")
+    assert "github" in str(exc.value)
+
+
+def test_non_list_allowlist_is_denied(monkeypatch):
+    """A scalar/'*' value must not grant ambient access."""
+    _patch_config(monkeypatch, {"my-plugin": {"mcp_allowlist": "*"}})
+    ctx = _make_ctx()
+    with pytest.raises(PermissionError):
+        ctx.call_mcp("github", "create_issue")
+
+
+def test_denied_call_never_touches_transport(monkeypatch):
+    _patch_config(monkeypatch, {})
+    called = {}
+    _patch_handler(monkeypatch, '{"result": "hi"}', called)
+    ctx = _make_ctx()
+    with pytest.raises(PermissionError):
+        ctx.call_mcp("github", "create_issue")
+    assert called == {}
+
+
+# ---------------------------------------------------------------------------
+# Allowed calls route through the existing MCP handler machinery
+# ---------------------------------------------------------------------------
+
+
+def test_allowed_call_routes_through_existing_handler(monkeypatch):
+    _patch_config(monkeypatch, {"my-plugin": {"mcp_allowlist": ["github"]}})
+    captured = {}
+    _patch_handler(monkeypatch, json.dumps({"result": "issue #7 created"}), captured)
+
+    ctx = _make_ctx()
+    result = ctx.call_mcp("github", "create_issue", {"title": "bug"})
+
+    assert captured["server"] == "github"
+    assert captured["tool"] == "create_issue"
+    assert captured["args"] == {"title": "bug"}
+    assert result == {"ok": True, "result": "issue #7 created"}
+
+
+def test_error_result_maps_to_ok_false(monkeypatch):
+    _patch_config(monkeypatch, {"my-plugin": {"mcp_allowlist": ["github"]}})
+    _patch_handler(monkeypatch, json.dumps({"error": "MCP server 'github' is not connected"}))
+
+    ctx = _make_ctx()
+    result = ctx.call_mcp("github", "create_issue")
+    assert result["ok"] is False
+    assert "not connected" in result["error"]
+
+
+def test_structured_content_passthrough(monkeypatch):
+    _patch_config(monkeypatch, {"my-plugin": {"mcp_allowlist": ["rag"]}})
+    _patch_handler(
+        monkeypatch,
+        json.dumps({"result": "text part", "structuredContent": {"hits": 3}}),
+    )
+
+    ctx = _make_ctx()
+    result = ctx.call_mcp("rag", "query")
+    assert result["ok"] is True
+    assert result["result"] == "text part"
+    assert result["structuredContent"] == {"hits": 3}
+
+
+@pytest.mark.parametrize("failed", [False, True])
+@pytest.mark.parametrize("value", ["row-7", None, 0, False])
+def test_result_details_survive_the_plugin_envelope(monkeypatch, failed, value):
+    _patch_config(monkeypatch, {"my-plugin": {"mcp_allowlist": ["rag"]}})
+    payload = {"error" if failed else "result": "conflict" if failed else "finished",
+               "structuredContent": value, "_meta": {"com.example/revision": "rev-7"}}
+    _patch_handler(monkeypatch, json.dumps(payload))
+    ctx = _make_ctx()
+    result = ctx.call_mcp("rag", "query")
+    assert result == {"ok": not failed, **payload}
+    assert type(result["structuredContent"]) is type(value)
+    _patch_handler(monkeypatch, '{"result": "next call"}')
+    assert ctx.call_mcp("rag", "query") == {"ok": True, "result": "next call"}
+
+
+@pytest.mark.parametrize("failed", [False, True])
+def test_structured_truncation_is_not_lost_in_the_plugin_envelope(monkeypatch, failed):
+    _patch_config(monkeypatch, {"my-plugin": {"mcp_allowlist": ["rag"]}})
+    payload = {"error" if failed else "result": "oversized", "structuredContentTruncated": True}
+    _patch_handler(monkeypatch, json.dumps(payload))
+    assert _make_ctx().call_mcp("rag", "query") == {"ok": not failed, **payload}
+
+
+@pytest.mark.parametrize("large_field", ["error", "structuredContent"])
+def test_truncation_keeps_error_classification(monkeypatch, large_field):
+    _patch_config(monkeypatch, {"my-plugin": {"mcp_allowlist": ["rag"]}})
+    # Put error last too: its meaning does not depend on JSON key order.
+    payload = {"structuredContent": {"id": "row-7"}, "error": "conflict"}
+    payload[large_field] = "x" * (PluginContext._MCP_RESULT_CHAR_CAP + 500)
+    _patch_handler(monkeypatch, json.dumps(payload))
+    result = _make_ctx().call_mcp("rag", "query")
+    assert result["ok"] is False
+    assert result["truncated"] is True
+    assert len(result["error"]) <= PluginContext._MCP_RESULT_CHAR_CAP + 20
+    if large_field != "error":
+        assert result["error"] == "conflict"
+
+
+# ---------------------------------------------------------------------------
+# Timeout handling
+# ---------------------------------------------------------------------------
+
+
+
+
+def test_timeout_defaults_and_bounds(monkeypatch):
+    _patch_config(monkeypatch, {"my-plugin": {"mcp_allowlist": ["s"]}})
+    captured = {}
+    _patch_handler(monkeypatch, '{"result": ""}', captured)
+    ctx = _make_ctx()
+
+    ctx.call_mcp("s", "t")
+    assert captured["timeout"] == 30.0
+
+    ctx.call_mcp("s", "t", timeout=0)  # below floor → clamped to 1s
+    assert captured["timeout"] == 1.0
+
+    ctx.call_mcp("s", "t", timeout=99999)  # above ceiling → clamped to 600s
+    assert captured["timeout"] == 600.0
+
+    ctx.call_mcp("s", "t", timeout="nonsense")  # unparseable → default
+    assert captured["timeout"] == 30.0
+
+
+# ---------------------------------------------------------------------------
+# Result size cap
+# ---------------------------------------------------------------------------
+
+
+def test_oversized_result_is_truncated(monkeypatch):
+    _patch_config(monkeypatch, {"my-plugin": {"mcp_allowlist": ["big"]}})
+    huge = "x" * (PluginContext._MCP_RESULT_CHAR_CAP + 5000)
+    _patch_handler(monkeypatch, huge)
+
+    ctx = _make_ctx()
+    result = ctx.call_mcp("big", "dump")
+    assert result["ok"] is True
+    assert result["truncated"] is True
+    assert len(result["result"]) <= PluginContext._MCP_RESULT_CHAR_CAP + 20
+    assert result["result"].endswith("… [truncated]")

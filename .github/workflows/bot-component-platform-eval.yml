@@ -1,0 +1,100 @@
+name: Bot component platform evaluation
+
+on:
+  push:
+    branches: [fix/bot-outcome-reliability]
+    paths:
+      - '.github/workflows/bot-component-platform-eval.yml'
+      - 'agent/**'
+      - 'tools/**'
+      - 'tests/**'
+      - 'hermes_cli/config_defaults.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bot-platform-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  bot-components:
+    name: Bot components (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-15, windows-latest]
+    steps:
+      - name: Checkout measured source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Set up locked Python and test dependencies
+        uses: ./.github/actions/setup-pm
+        with:
+          extras: '["all", "anthropic"]'
+          test-environment: 'true'
+          save-tools-cache: 'false'
+          save-python-cache: 'false'
+      - name: Probe unchanged upstream Windows controls
+        if: runner.os == 'Windows'
+        continue-on-error: true
+        shell: bash
+        env:
+          HERMES_TEST_FILE_RETRIES: '0'
+          HERMES_TEST_WORKERS: '2'
+        run: |
+          set -o pipefail
+          EVAL_CURRENT_ROOT="$(pwd)"
+          EVAL_BASELINE_ROOT="$(cygpath -u "$RUNNER_TEMP")/original-bot-controls"
+          git fetch --no-tags --depth=1 origin c714c42431e518fcd1c8870eff5c667d5de33b57
+          mkdir -p "$EVAL_BASELINE_ROOT"
+          git archive c714c42431e518fcd1c8870eff5c667d5de33b57 | tar -xf - -C "$EVAL_BASELINE_ROOT"
+          {
+            git rev-parse c714c42431e518fcd1c8870eff5c667d5de33b57
+            cd "$EVAL_BASELINE_ROOT"
+            scripts/run_tests.sh tests/tools/test_file_tools.py tests/tools/test_file_read_guards.py \
+              -k 'test_read_file_tool_rejects_device_symlink_before_io or test_symlink_to_blocked_device_is_blocked or test_patch_move_to_sensitive_dst_blocked or test_patch_update_no_space_after_asterisks_blocked or test_system_path_still_blocked or test_macos_private_var_carveouts' -q
+          } 2>&1 | tee "$EVAL_CURRENT_ROOT/bot-platform-baseline.log"
+      - name: Run bot completion and recovery contracts
+        shell: bash
+        env:
+          HERMES_TEST_FILE_RETRIES: '0'
+          HERMES_TEST_WORKERS: '2'
+        run: |
+          set -o pipefail
+          scripts/run_tests.sh \
+            tests/agent/test_bot_mode_completion_review.py \
+            tests/agent/test_bot_mode_completion_readback.py \
+            tests/agent/test_bot_mode_terminal_completion.py \
+            tests/agent/test_nt_namespace_guard.py \
+            tests/agent/test_todo_completion_guard.py \
+            tests/agent/test_task_iteration_budget.py \
+            tests/agent/test_verification_continuation_budget.py \
+            tests/tools/test_bot_relay.py \
+            tests/tools/test_bot_relay_settlement.py \
+            tests/tools/test_bot_relay_windows_paths.py \
+            tests/tools/test_bot_reply_receipt.py \
+            tests/tools/test_bot_mode_dm.py \
+            tests/tools/test_bot_mode_canonical_chat_resolution.py \
+            tests/tools/test_bot_desktop_resources.py \
+            tests/tools/test_file_tools.py \
+            tests/tools/test_file_read_guards.py \
+            tests/tools/test_mcp_unknown_write_failure.py \
+            tests/tools/test_todo_atomic_capacity.py \
+            tests/tools/test_required_delegation_isolation.py \
+            tests/gateway/test_bot_chat_follows_profile.py \
+            tests/gateway/test_peer_dm_bot_chat_authority.py \
+            tests/agent/test_memory_delta.py \
+            tests/hermes_cli/test_backup_verify.py \
+            -q 2>&1 | tee bot-platform-tests.log
+      - name: Preserve platform output
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: bot-platform-${{ matrix.os }}
+          path: |
+            bot-platform-tests.log
+            bot-platform-baseline.log
+          if-no-files-found: warn
