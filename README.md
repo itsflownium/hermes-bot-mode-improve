@@ -2,7 +2,7 @@
 
 Custom improvements to **[Hermes Agent](https://github.com/NousResearch/hermes-agent)'s Bot Mode**, focused on reliable task completion, recovery, bot messaging and verifiable outputs.
 
-This repository contains the full Hermes source with the Bot Mode changes included on `main`. Hermes Agent and its original Bot Mode are built by **Nous Research**; this fork documents the additional improvements and their measured results.
+**Bot Mode improvements by [itsflownium](https://github.com/itsflownium).** This repository contains the full Hermes source with the custom improvements included on `main`, along with their implementation notes, demo and evaluation evidence.
 
 [What changed](#what-changed) · [Watch the demo](#demo) · [Verified results](#verified-results) · [Use this version](#use-this-version)
 
@@ -63,6 +63,6 @@ Follow the [source checkout development setup](CONTRIBUTING.md#development-setup
 
 The unchanged original project introduction and general installation guidance are preserved in [README.upstream.md](README.upstream.md). Its upstream installer targets the original Hermes distribution; use this checkout's setup for the improvements in this repository.
 
-## Upstream and license
+## Credits and license
 
-Based on **[Hermes Agent by Nous Research](https://github.com/NousResearch/hermes-agent)**. Original attribution and the [MIT license](LICENSE) are preserved. This is a community improvement fork for Hermes Agent's Bot Mode.
+Custom Bot Mode improvements developed by **[itsflownium](https://github.com/itsflownium)** for [Hermes Agent](https://github.com/NousResearch/hermes-agent). Original source attribution is preserved in the [upstream reference](README.upstream.md) and [MIT license](LICENSE).
