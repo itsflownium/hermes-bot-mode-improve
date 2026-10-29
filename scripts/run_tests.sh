@@ -184,7 +184,9 @@ cd "$REPO_ROOT"
 # compiling on first import) avoids redundant work across ~2000 processes.
 # Uses git to list tracked .py files (skips venv, node_modules, etc).
 echo "▶ pre-compiling bytecode cache"
-"$PYTHON" -m compileall -q -j 0 -- $(git ls-files '*.py') >/dev/null 2>&1 || true
+# This is optional warm-up, not a second process pool competing with the
+# isolated test workers (or hanging on process-pool startup on macOS).
+"$PYTHON" -m compileall -q -j 1 -- $(git ls-files '*.py') >/dev/null 2>&1 || true
 
 echo "▶ launching test runner"
 exec env -i \
