@@ -70,7 +70,8 @@ def test_sessions_export_redact_scrubs_secrets(monkeypatch, tmp_path):
     import hermes_cli.main as main_mod
 
     monkeypatch.setenv("HERMES_HOME", str(tmp_path))
-    secret = "sk-proj-Zz12345678901234567890123456789012345678"
+    # Synthetic key-shaped input still exercises the real export redactor.
+    secret = "sk-" + ("a0" * 24)
     path = tmp_path / "state.db"
     db = SessionDB(db_path=path)
     db.create_session("s1", "cli")

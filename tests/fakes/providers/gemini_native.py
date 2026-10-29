@@ -42,7 +42,8 @@ import itertools
 
 GEMINI_HOST = "generativelanguage.googleapis.com"
 MODEL_ID = "gemini-3-flash-preview"
-API_KEY = "AIzaFakeGeminiKeyForHermesE2E0000000000"
+# Synthetic key shape for the loopback fake; never a Google credential.
+API_KEY = "AIza" + ("0" * 35)
 # Documented dummy signatures that tell Gemini 3 to skip thought-signature validation.
 SKIP_SIGNATURES = frozenset({"skip_thought_signature_validator", "context_engineering_is_the_way_to_go"})
 # Hermes-side config for a home that talks to this fake: the user-facing provider id + model and the
