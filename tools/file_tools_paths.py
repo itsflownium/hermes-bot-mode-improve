@@ -156,7 +156,8 @@ def _host_text(text: str, container_paths: bool) -> str:
 
 def _anchor(text: str, base, container_paths: bool) -> Path | PurePosixPath:
     """Return *text* as an absolute, normalized path, joining it onto ``base()`` when
-    relative. Container: pure-posix, no host deref. Host: resolve() (win32: ntpath normpath)."""
+    relative. Container: pure-posix, no host deref. Host: resolve() so aliases
+    of the same file share read tracking and write baselines."""
     if container_paths:
         if not posixpath.isabs(text):
             text = posixpath.join(str(base()), text)
@@ -166,7 +167,7 @@ def _anchor(text: str, base, container_paths: bool) -> Path | PurePosixPath:
 
         if not ntpath.isabs(text):
             text = ntpath.join(str(base()), text)
-        return Path(ntpath.normpath(text))
+        return Path(ntpath.normpath(text)).resolve()
     p = Path(text)
     if not p.is_absolute():
         p = Path(base()) / p
