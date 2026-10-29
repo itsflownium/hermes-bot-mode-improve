@@ -40,7 +40,7 @@ jobs:
           HERMES_TEST_WORKERS: '2'
         run: |
           set -o pipefail
-          scripts/run_tests.sh tests/tools/test_file_read_guards.py tests/tools/test_file_tools.py -q 2>&1 | tee bot-reliability.log
+          scripts/run_tests.sh tests/tools/test_file_read_guards.py tests/tools/test_file_tools.py tests/tools/test_windows_file_identity.py -q 2>&1 | tee bot-reliability.log
       - name: Preserve native output
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
