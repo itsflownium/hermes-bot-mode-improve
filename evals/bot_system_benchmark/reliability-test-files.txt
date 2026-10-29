@@ -29,3 +29,5 @@ tests/scripts/test_run_tests_parallel.py
 tests/scripts/test_run_tests_shell.py
 tests/evals/test_quality_task_oracles.py
 tests/evals/test_model_transport.py
+tests/hermes_platform/test_file_stamps.py
+tests/agent/test_verification_snapshot.py

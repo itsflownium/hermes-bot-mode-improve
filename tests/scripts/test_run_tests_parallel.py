@@ -764,6 +764,7 @@ def test_files_from_dash_reads_the_list_from_stdin(tmp_path: Path) -> None:
     assert "✓2" in proc.stdout or "2 passed" in proc.stdout, proc.stdout
 
 
+@pytest.mark.platforms("posix")
 def test_scratch_root_is_per_user(tmp_path: Path, monkeypatch) -> None:
     """Two users on one host must never share the runner's scratch root.
 
@@ -792,6 +793,18 @@ def test_scratch_root_is_per_user(tmp_path: Path, monkeypatch) -> None:
     assert mine != theirs
     assert mine.is_dir() and theirs.is_dir()
     assert mine.parent == tmp_path and theirs.parent == tmp_path
+
+
+@pytest.mark.platforms("windows")
+def test_windows_scratch_root_uses_the_native_user_temp(tmp_path, monkeypatch):
+    import importlib
+
+    monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[2] / "scripts"))
+    runner = importlib.import_module("run_tests_parallel")
+    monkeypatch.setattr(runner.tempfile, "gettempdir", lambda: str(tmp_path))
+    root = Path(runner._runner_scratch_root())
+    assert root.parent == tmp_path
+    assert root.is_dir()
 
 
 def test_off_host_note_names_platforms_specs_that_exclude_this_host(tmp_path: Path) -> None:

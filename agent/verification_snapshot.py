@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import Any
 
 from hermes_constants import get_hermes_home
+from hermes_platform.file_stamps import stable_open_file
 
 
 _MAX_FILES = 50_000
@@ -100,7 +101,8 @@ def _file_digest(
         flags |= getattr(os, "O_NOFOLLOW", 0)
     descriptor = os.open(path, flags)
     with os.fdopen(descriptor, "rb", buffering=0) as source:
-        if _stamp(os.fstat(source.fileno())) != _stamp(content_before):
+        opened = os.fstat(source.fileno())
+        if not stat.S_ISREG(opened.st_mode) or _stamp(path.stat()) != _stamp(content_before):
             raise OSError("verification input changed before it was opened")
         unread = size
         while unread:
@@ -112,7 +114,7 @@ def _file_digest(
             digest.update(chunk)
             unread -= len(chunk)
         content_after = os.fstat(source.fileno())
-    if _stamp(content_after) != _stamp(content_before):
+    if not stable_open_file(content_before, opened, content_after, path.stat()):
         raise OSError("verification input changed while it was being read")
     stamp = _stamp(before) + _stamp(content_before) if is_link else _stamp(before)
     return digest.hexdigest(), size, stamp

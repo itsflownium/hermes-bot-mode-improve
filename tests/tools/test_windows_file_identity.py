@@ -10,6 +10,23 @@ from tools.file_tools_read_tracking import _has_full_write_baseline, _read_track
 from tests.tools.test_file_read_guards import _make_fake_ops
 
 
+def test_snapshot_remains_available_after_rewrite_with_restored_mtime(tmp_path):
+    import os
+    from tools.file_tools_read_tracking import _file_metadata, _file_version
+
+    path = tmp_path / "rewritten.txt"
+    path.write_bytes(b"first\n")
+    before = _file_version(str(path))
+    assert before is not None
+    info = path.stat()
+    path.write_bytes(b"other\n")
+    os.utime(path, ns=(info.st_atime_ns, info.st_mtime_ns))
+    after = _file_version(str(path))
+    assert after is not None
+    assert after[:-1] == _file_metadata(str(path))
+    assert before[-1] != after[-1]
+
+
 @pytest.mark.platforms("windows")
 def test_drive_letter_alias_reuses_the_same_file_read(tmp_path):
     path = tmp_path / "read-me.txt"
