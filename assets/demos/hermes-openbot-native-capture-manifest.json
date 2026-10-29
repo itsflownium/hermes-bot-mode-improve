@@ -1,0 +1,50 @@
+{
+  "hermes_done": {
+    "file": "hermes-native-completed.jpg",
+    "sha256": "7cd990bba95d733ee956ba328d25e7570aaac7e8ac77c9b8f4fee02fbf5586f5",
+    "bytes": 470804,
+    "source": "cua native screenshot API"
+  },
+  "openbot_done": {
+    "file": "openbot-native-completed.jpg",
+    "sha256": "b6fbe5950b8b4f6fe918f7403de7286219c61ac3cb6c102c94ba48ef171e7538",
+    "bytes": 421353,
+    "source": "cua native screenshot API"
+  },
+  "hermes_before": {
+    "file": "000-hermes.jpg",
+    "sha256": "184cc4a6de765c07658f3fcf743a060103f32d686c1d99b62ed9c9501c180c1e",
+    "bytes": 312029,
+    "source": "cua native screenshot API"
+  },
+  "openbot_before": {
+    "file": "000-openbot.jpg",
+    "sha256": "1e164ba9b85c34accfc2698efc551d0fc117f0d6fa59f85179b7f6f3e1a40b5f",
+    "bytes": 327130,
+    "source": "cua native screenshot API"
+  },
+  "openbot_trace": {
+    "file": "openbot-native-trace.jpg",
+    "sha256": "89c4f82687c9fb3b86ca3323a754fc2f1e83fe09b33617dbc6351d98a3ba6da7",
+    "bytes": 230557,
+    "source": "cua native screenshot API"
+  },
+  "openbot_start": {
+    "file": "openbot-fallback-start.jpg",
+    "sha256": "6abfc121bcf4d90e80ec51196da6995c7c13226be5e04c1aeb74cbf7263f9394",
+    "bytes": 373402,
+    "source": "cua native screenshot API"
+  },
+  "hermes_running": {
+    "file": "001-hermes.jpg",
+    "sha256": "0bf35c60ab8b1c698fdbf4b75fe345cccfae432e5b1d5333946618c085f2313e",
+    "bytes": 237259,
+    "source": "cua native screenshot API"
+  },
+  "openbot_creating": {
+    "file": "001-openbot.jpg",
+    "sha256": "456447917c3785d495c9fcaae957d467b6204561f5e3a4def46def52b465a27b",
+    "bytes": 271289,
+    "source": "cua native screenshot API"
+  }
+}

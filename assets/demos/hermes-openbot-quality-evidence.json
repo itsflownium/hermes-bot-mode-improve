@@ -1,0 +1,391 @@
+{
+  "protocol": "existing-output-quality-review-v1",
+  "reviewed_utc": "2026-10-28T05:34:41.362250+00:00",
+  "new_inference_calls": 0,
+  "quality_review_was_predeclared_before_runs": false,
+  "original_task_contracts_unchanged": true,
+  "scope": "Reanalysis of saved real outputs. Earlier controlled-model backend tasks and the later native desktop demo are separate comparisons.",
+  "backend": {
+    "protocol": "model-terminal-explicit-schema-v1",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "provider": "Nous Portal",
+    "source_revisions": {
+      "hermes_before": "42489936cfe8de74fda1e4fc482ac412a02de348",
+      "hermes_after": "40a670996696abd1e5b1975f111b9dd6bacf9914",
+      "openbot": "f91535fb0c8d6fd0a63911ec6e4b67154fd85ebe"
+    },
+    "cases": [
+      {
+        "case": "data_summary",
+        "title": "Deduplicate paid orders",
+        "hermes": true,
+        "openbot": false,
+        "checks": {
+          "hermes": {
+            "summary": true,
+            "paid_rows": true,
+            "input_preserved": true
+          },
+          "openbot": {
+            "summary": false,
+            "paid_rows": false,
+            "input_preserved": true
+          }
+        }
+      },
+      {
+        "case": "config_migration",
+        "title": "Migrate a configuration",
+        "hermes": true,
+        "openbot": true,
+        "checks": {
+          "hermes": {
+            "migrated_json": true,
+            "migration_note": true,
+            "input_preserved": true
+          },
+          "openbot": {
+            "migrated_json": true,
+            "migration_note": true,
+            "input_preserved": true
+          }
+        }
+      },
+      {
+        "case": "code_repair",
+        "title": "Repair code and save tests",
+        "hermes": true,
+        "openbot": true,
+        "checks": {
+          "hermes": {
+            "independent_tests": true,
+            "test_suite_preserved": true,
+            "saved_test_output": true,
+            "test_stdout": "",
+            "test_stderr": "----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+          },
+          "openbot": {
+            "independent_tests": true,
+            "test_suite_preserved": true,
+            "saved_test_output": true,
+            "test_stdout": "",
+            "test_stderr": "----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+          }
+        }
+      },
+      {
+        "case": "transient_recovery",
+        "title": "Recover from a failed command",
+        "hermes": true,
+        "openbot": true,
+        "checks": {
+          "hermes": {
+            "correct_report": true,
+            "exactly_two_attempts": true,
+            "status": true,
+            "helper_preserved": true
+          },
+          "openbot": {
+            "correct_report": true,
+            "exactly_two_attempts": true,
+            "status": true,
+            "helper_preserved": true
+          }
+        }
+      },
+      {
+        "case": "user_correction",
+        "title": "Apply a user correction",
+        "hermes": true,
+        "openbot": true,
+        "checks": {
+          "hermes": {
+            "current_json": true,
+            "change_recorded": true
+          },
+          "openbot": {
+            "current_json": true,
+            "change_recorded": true
+          }
+        }
+      },
+      {
+        "case": "missing_input",
+        "title": "Handle missing input honestly",
+        "hermes": true,
+        "openbot": true,
+        "checks": {
+          "hermes": {
+            "blocker": true,
+            "no_fabrication": true
+          },
+          "openbot": {
+            "blocker": true,
+            "no_fabrication": true
+          }
+        }
+      }
+    ],
+    "totals": {
+      "hermes": {
+        "passed": 6,
+        "tasks": 6
+      },
+      "openbot": {
+        "passed": 5,
+        "tasks": 6
+      }
+    },
+    "data_summary_recheck": {
+      "input": "id,status,cents\na,paid,1250\nb,pending,900\nc,paid,2750\na,paid,1250\n",
+      "expected_summary": {
+        "paid_count": 2,
+        "total_cents": 4000
+      },
+      "expected_csv_rows": [
+        [
+          "id",
+          "cents"
+        ],
+        [
+          "a",
+          "1250"
+        ],
+        [
+          "c",
+          "2750"
+        ]
+      ],
+      "hermes": {
+        "summary": {
+          "paid_count": 2,
+          "total_cents": 4000
+        },
+        "csv_rows": [
+          [
+            "id",
+            "cents"
+          ],
+          [
+            "a",
+            "1250"
+          ],
+          [
+            "c",
+            "2750"
+          ]
+        ],
+        "checks": {
+          "correct_summary": true,
+          "correct_csv_with_header": true,
+          "input_preserved": true
+        },
+        "artifacts": {
+          "summary.json": {
+            "sha256": "3d22098443873873aa5e7e040480c5f159f47eb9137781fb70d2c5dc98ab3d0d",
+            "bytes": 39,
+            "text": "{\"paid_count\": 2, \"total_cents\": 4000}\n"
+          },
+          "paid.csv": {
+            "sha256": "d452540cdc65e297fc63bddd1edfd723ba2236805c5f7f4f8288f519d0e55042",
+            "bytes": 26,
+            "text": "id,cents\r\na,1250\r\nc,2750\r\n"
+          }
+        }
+      },
+      "openbot": {
+        "summary": {
+          "paid_count": 3,
+          "total_cents": 5250
+        },
+        "csv_rows": [
+          [
+            "a",
+            "1250"
+          ],
+          [
+            "c",
+            "2750"
+          ]
+        ],
+        "checks": {
+          "correct_summary": false,
+          "correct_csv_with_header": false,
+          "input_preserved": true
+        },
+        "artifacts": {
+          "summary.json": {
+            "sha256": "49bff3b64da7019f3458dc37a7f621e6672bd692378ace308814f039fdd94056",
+            "bytes": 39,
+            "text": "{\"paid_count\": 3, \"total_cents\": 5250}\n"
+          },
+          "paid.csv": {
+            "sha256": "3522ec352ac9394e2a76c2b7da3ab512df95a1e3077fe4f1586e23bf4b52376f",
+            "bytes": 14,
+            "text": "a,1250\nc,2750\n"
+          }
+        }
+      }
+    },
+    "historical_phases": [
+      {
+        "protocol": "artifact-graded-deepseek-nous-v1",
+        "receipts_sha256": "104c4d8afbbc4da2dbf63b62682273644cec3582203342a26badf4f769927f57",
+        "counts": {
+          "hermes_original": {
+            "passed": 11,
+            "launches": 12
+          },
+          "hermes_updated": {
+            "passed": 10,
+            "launches": 12
+          },
+          "openbot": {
+            "passed": 8,
+            "launches": 12
+          }
+        },
+        "source_revisions": {
+          "hermes_original": "c714c42431e518fcd1c8870eff5c667d5de33b57",
+          "hermes_updated": "b315888da6c36bfb053bddf98cec5a9e0e6f492d",
+          "openbot": "f91535fb0c8d6fd0a63911ec6e4b67154fd85ebe"
+        }
+      },
+      {
+        "protocol": "model-readback-followup-v1",
+        "receipts_sha256": "2af14b9a16f25616162e1053b52f808a67705c33d0f609cc511c5cbb322ec912",
+        "counts": {
+          "hermes_after": {
+            "passed": 10,
+            "launches": 12
+          },
+          "openbot": {
+            "passed": 2,
+            "launches": 2
+          },
+          "hermes_before": {
+            "passed": 1,
+            "launches": 2
+          }
+        },
+        "source_revisions": {
+          "hermes_before": "5bdbd90f3f55cd53c37a6645ae2064cc95f6d034",
+          "hermes_after": "42489936cfe8de74fda1e4fc482ac412a02de348",
+          "openbot": "f91535fb0c8d6fd0a63911ec6e4b67154fd85ebe"
+        }
+      },
+      {
+        "protocol": "model-terminal-explicit-schema-v1",
+        "receipts_sha256": "b6d2bf2318d6852b0087e3af06b7b999fc97e7eba3636dda3d3a8edd65fa3cf2",
+        "counts": {
+          "hermes_after": {
+            "passed": 6,
+            "launches": 6
+          },
+          "openbot": {
+            "passed": 5,
+            "launches": 6
+          },
+          "hermes_before": {
+            "passed": 0,
+            "launches": 1
+          }
+        },
+        "source_revisions": {
+          "hermes_before": "42489936cfe8de74fda1e4fc482ac412a02de348",
+          "hermes_after": "40a670996696abd1e5b1975f111b9dd6bacf9914",
+          "openbot": "f91535fb0c8d6fd0a63911ec6e4b67154fd85ebe"
+        }
+      }
+    ],
+    "limits": [
+      "One fresh run per task and system in the latest sample; six authored, unblinded tasks.",
+      "Different native system prompts and toolsets; same requested provider/model and task controls.",
+      "OpenBot used its unchanged real AgentService/PiAgentClient/Pi backend; desktop and browser ports were unavailable and unused by these tasks.",
+      "The common transport buffered upstream replies; replay timing and raw turn duration are not a speed ranking.",
+      "Hermes recovery encountered one JSONDecodeError from the transport and ultimately passed. The upstream status and body for that error were not captured.",
+      "Earlier model phases include failures for both products. Two earlier correction prompts had a flat-schema grading ambiguity; the latest prompt explicitly specified that shape for both systems.",
+      "Two current native Windows file-read/dedup tests remain failing. GUI, full agent teams, long-running reliability and broad reasoning superiority are unproven."
+    ],
+    "source_evidence_sha256": "5e2addd846b9ca12838d53b26539d66425ffd5966ca1f9855728a0607895a270"
+  },
+  "native_desktop": {
+    "source_protocol": "native-desktop-config-demo-v2",
+    "hermes": {
+      "artifact_checks_passed": 3,
+      "artifact_checks_total": 3,
+      "inverse_migration_restores_original": true,
+      "identified_note_errors": [
+        {
+          "claim": "The migration is not reversible without losing the original key name",
+          "finding": "Incorrect for this specified rename: inverse key rename and version 1 restore the exact original JSON object.",
+          "counterexample_restores_original": true
+        }
+      ],
+      "note_bytes": 1390,
+      "review_method": "Unblinded manual review after the run, with a programmatically checked counterexample. No claim of exhaustive factual verification."
+    },
+    "openbot": {
+      "artifact_checks_passed": 3,
+      "artifact_checks_total": 3,
+      "inverse_migration_restores_original": true,
+      "identified_note_errors": [],
+      "note_bytes": 734,
+      "review_method": "Unblinded manual review after the run, with a programmatically checked counterexample. No claim of exhaustive factual verification."
+    },
+    "outcome": "Equal artifact correctness; Hermes has one identified extra documentation error. A Hermes quality win is not established by this desktop task.",
+    "provider_controls_matched": false,
+    "evidence_file": "hermes-openbot-native-demo-evidence.json"
+  },
+  "other_dimensions": {
+    "speed_and_cost": "The native routes and controls differ; no matched comparison is available.",
+    "autonomous_model_recovery": "Not established: OpenBot's model switch was manual after user authorization.",
+    "platforms": [
+      {
+        "name": "Linux",
+        "passed": 309,
+        "failed": 0,
+        "skipped": 4
+      },
+      {
+        "name": "macOS",
+        "passed": 299,
+        "failed": 0,
+        "skipped": 14
+      },
+      {
+        "name": "Windows",
+        "passed": 293,
+        "failed": 2,
+        "skipped": 18
+      }
+    ],
+    "long_running_bot_quality": "Not established by these short local tasks.",
+    "source_search_results": [
+      {
+        "catalog_size": 32,
+        "hermes_p50": 0.079166,
+        "hermes_p95": 0.170959,
+        "openbot_p50": 0.047083,
+        "openbot_p95": 0.060666
+      },
+      {
+        "catalog_size": 256,
+        "hermes_p50": 0.374167,
+        "hermes_p95": 0.401292,
+        "openbot_p50": 0.3000835,
+        "openbot_p95": 0.397666
+      },
+      {
+        "catalog_size": 1024,
+        "hermes_p50": 1.5623125,
+        "hermes_p95": 2.917917,
+        "openbot_p50": 1.2162085,
+        "openbot_p95": 1.510625
+      }
+    ],
+    "source_search_scope": "Earlier component test: Hermes 70a43eee vs OpenBot f91535fb. Warm tool search only; unequal native catalogs were excluded from startup ranking."
+  },
+  "conclusion": "Hermes showed an artifact-quality advantage on one data-processing task in the latest six-task backend sample, with five ties. The native desktop migration has no Hermes quality advantage. These findings do not establish general quality superiority.",
+  "selection_policy": "Show all six paired latest backend tasks, all stored earlier phase counts, the before-control failure, and the native note error. No blended score across versions, protocols, or samples."
+}

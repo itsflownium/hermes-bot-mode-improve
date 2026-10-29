@@ -1,0 +1,1311 @@
+{
+  "protocol": "native-desktop-config-demo-v2",
+  "exported_utc": "2026-10-28T05:34:55.990198+00:00",
+  "scope": "One task performed in the actual native Hermes Bot Mode and user-installed OpenBot desktop applications. No simulated agent decisions or redrawn product interfaces.",
+  "presentation": "Edited walkthrough from genuine captured app screenshots. Frame display durations are editorial and do not reproduce execution timing. Original screenshots and hashes are retained privately.",
+  "plan_declared_before_inference": {
+    "protocol": "native-desktop-config-demo-v2",
+    "declared_utc": "2026-10-28T05:07:21.551107+00:00",
+    "same_prompt": "Work only inside your local workspace. Create settings.json containing exactly this JSON object: {\"version\":1,\"user\":{\"color\":\"blue\",\"name\":\"Ada\"},\"keep\":{\"enabled\":true}}. Then create settings-v2.json with version 2 and rename user.color to user.theme, preserving user.name and all unrelated fields. Keep settings.json unchanged after creating it. Also create MIGRATION.md explaining color -> theme and version 1 -> 2. Read the saved files to check them, then briefly report what you created. Do not use network access, install packages, or delegate.",
+    "scope": "Actual native desktop applications. Different models/providers; no isolated engine ranking or latency ranking. The original config file is created as part of the identical user request for both bots.",
+    "hermes": {
+      "revision": "40a670996696abd1e5b1975f111b9dd6bacf9914",
+      "profile": "fresh isolated managed Bot Chat",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "provider": "Nous Portal"
+    },
+    "openbot": {
+      "native_app": "User-installed OpenBot 0.52.1",
+      "model": "openai/gpt-oss-120b",
+      "provider": "Groq through native custom-provider support"
+    },
+    "per_bot_allowance_usd": "0.50",
+    "total_authority_usd": "6.00",
+    "forwarded_request_limit_each": 16,
+    "output_token_limit_each_request": 2048,
+    "temperature": 0,
+    "acceptance": {
+      "original_config": {
+        "version": 1,
+        "user": {
+          "color": "blue",
+          "name": "Ada"
+        },
+        "keep": {
+          "enabled": true
+        }
+      },
+      "migrated_config": {
+        "version": 2,
+        "user": {
+          "theme": "blue",
+          "name": "Ada"
+        },
+        "keep": {
+          "enabled": true
+        }
+      },
+      "migration_note": "Contains color, theme, 1 and 2",
+      "runtime": "Normal completed native turn, with no task error or budget stop"
+    },
+    "reruns_for_outcome_selection": 0
+  },
+  "hermes": {
+    "application": "New isolated source-built Hermes Desktop",
+    "revision": "40a670996696abd1e5b1975f111b9dd6bacf9914",
+    "native_version_visible": "vgit.40a6709",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "provider": "Nous Portal",
+    "native_surface": "Managed Bot Chat, canonical chat title Bot Chat",
+    "artifacts": {
+      "settings.json": {
+        "sha256": "b8c9161e15f7529cfca962bb73773c493a8ecd34462691d37290f996fb961da1",
+        "bytes": 75,
+        "text": "{\"version\":1,\"user\":{\"color\":\"blue\",\"name\":\"Ada\"},\"keep\":{\"enabled\":true}}\n"
+      },
+      "settings-v2.json": {
+        "sha256": "9098ebc9b838fa48e7c1bacba766c8c8791107dc3240ad6c21c7211abf7bf437",
+        "bytes": 75,
+        "text": "{\"version\":2,\"user\":{\"theme\":\"blue\",\"name\":\"Ada\"},\"keep\":{\"enabled\":true}}\n"
+      },
+      "MIGRATION.md": {
+        "sha256": "861b2aab65921c0105f4e41357a8e53685197c15c04370eb254b3b779a98db40",
+        "bytes": 1390,
+        "text": "# Migration: settings v1 → v2\n\n## Changes\n\n| v1 | v2 |\n| --- | --- |\n| `version: 1` | `version: 2` |\n| `user.color` | `user.theme` |\n\n## Field rename: `color` → `theme`\n\nThe user's colour preference moved from `user.color` to `user.theme`. The value is\nunchanged — only the key is renamed. In v1 the key was `color`:\n\n```json\n{\"version\":1,\"user\":{\"color\":\"blue\",\"name\":\"Ada\"},\"keep\":{\"enabled\":true}}\n```\n\nIn v2 the same value lives under `theme`:\n\n```json\n{\"version\":2,\"user\":{\"theme\":\"blue\",\"name\":\"Ada\"},\"keep\":{\"enabled\":true}}\n```\n\n## Version bump: 1 → 2\n\n`version` is incremented from `1` to `2` to mark the document as using the new\nschema. A reader that sees `version: 2` should expect `user.theme` and must not\nlook for `user.color`.\n\n## Preserved fields\n\nEverything unrelated to the rename is carried over untouched:\n\n- `user.name` — unchanged (`\"Ada\"`)\n- `keep.enabled` — unchanged (`true`)\n\n## Migration steps\n\n1. Read the v1 document.\n2. Set `version` to `2`.\n3. If `user.color` exists, move its value to `user.theme` and remove `user.color`.\n4. Leave all other fields as they are.\n5. Write the result as the v2 document.\n\n## Notes\n\n- The migration is not reversible without losing the original key name; keep a\n  copy of the v1 file if rollback matters.\n- `settings.json` (v1) is left unchanged by this migration; the v2 result is\n  written to `settings-v2.json`.\n"
+      }
+    },
+    "checks": {
+      "original_config": true,
+      "migrated_config": true,
+      "migration_note": true
+    },
+    "passed": 3,
+    "total": 3,
+    "normal_completion_observed_in_native_ui": true
+  },
+  "openbot": {
+    "application": "User-installed OpenBot Desktop",
+    "version": "0.52.1",
+    "agent": "Native bot demo",
+    "first_model": "openai/gpt-oss-120b via Groq",
+    "first_attempt": "HTTP 413: requested 9849 tokens exceeds the account's 8000 TPM limit; retained, not treated as an engine-quality loss",
+    "fallback_authorization": "User: if it fails use another model",
+    "completed_model_label": "OpenCode/DeepSeek V4.1 Flash Free",
+    "provider_driver": "Native OpenCode CLI 2.2.0",
+    "fallback_was_manual": true,
+    "autonomous_model_recovery_proven": false,
+    "artifacts": {
+      "settings.json": {
+        "sha256": "b8c9161e15f7529cfca962bb73773c493a8ecd34462691d37290f996fb961da1",
+        "bytes": 75,
+        "text": "{\"version\":1,\"user\":{\"color\":\"blue\",\"name\":\"Ada\"},\"keep\":{\"enabled\":true}}\n"
+      },
+      "settings-v2.json": {
+        "sha256": "fff1835dc7f70c5638e02bc141a0262cc3411342dbbe68823c6e72791ac6fbf4",
+        "bytes": 112,
+        "text": "{\n  \"version\": 2,\n  \"user\": {\n    \"theme\": \"blue\",\n    \"name\": \"Ada\"\n  },\n  \"keep\": {\n    \"enabled\": true\n  }\n}\n"
+      },
+      "MIGRATION.md": {
+        "sha256": "09dd851565dd40070033c135ab22017c03159efb9c500abe75db63e2d1b505ff",
+        "bytes": 734,
+        "text": "# Migration: settings format v1 → v2\n\n## Version 1 → 2\n\nBump the top-level `version` field from `1` to `2`.\n\n## `user.color` → `user.theme`\n\nThe user's color preference moved and was renamed:\n\n| v1 | v2 |\n| --- | --- |\n| `user.color` | `user.theme` |\n\nMove the existing value from `user.color` to `user.theme`, then remove `user.color`. All unrelated fields, including `user.name` and `keep.enabled`, are preserved unchanged.\n\n## Example\n\nv1:\n\n```json\n{\"version\":1,\"user\":{\"color\":\"blue\",\"name\":\"Ada\"},\"keep\":{\"enabled\":true}}\n```\n\nv2:\n\n```json\n{\"version\":2,\"user\":{\"theme\":\"blue\",\"name\":\"Ada\"},\"keep\":{\"enabled\":true}}\n```\n\n`settings.json` (v1) is intentionally left unchanged; the migrated output lives in `settings-v2.json`.\n"
+      }
+    },
+    "checks": {
+      "original_config": true,
+      "migrated_config": true,
+      "migration_note": true
+    },
+    "passed": 3,
+    "total": 3,
+    "normal_completion_observed_in_native_ui": true
+  },
+  "requests_through_controlled_proxy": [
+    {
+      "launch": "native-desktop-demo-rerun-v1/openbot/config_migration/1",
+      "arm": "openbot",
+      "model": "openai/gpt-oss-120b",
+      "status": "completed",
+      "admitted_utc": "2026-10-28T05:09:55.914359+00:00",
+      "reservation_usd": "0.01857810",
+      "request_sha256": "f8e551bcb22728eb21fa55a8837bd9eb637c8d0ba48683f8c395862819df530d",
+      "input_bytes": 45543,
+      "roles": [
+        "system",
+        "user"
+      ],
+      "message_sha256": [
+        "96cacd092cee4a07ca35a63e8f6122e5984efa238f0d791c8f30450be541dac7",
+        "2c02b8be5fb53b15e36e369ea772f139905cde277f98e03c4569922cdd82b612"
+      ],
+      "tools_sha256": "fa495da29ad344d7463532090ea12eb23308367105420033aad095107ad70d1e",
+      "tool_names": [
+        "edit",
+        "glob",
+        "grep",
+        "question",
+        "read",
+        "shell",
+        "skill",
+        "subagent",
+        "webfetch",
+        "websearch",
+        "write",
+        "execute"
+      ],
+      "tool_calls": [],
+      "tool_results": [],
+      "effective_request_sha256": "87c1537e9e73e5c259d921a182ef886ffe3b0bac7e38efb37c8e2a0d50453a58",
+      "completed_utc": "2026-10-28T05:09:56.242925+00:00",
+      "http_status": 413,
+      "response": {
+        "error": {
+          "message": "Request too large for model `openai/gpt-oss-120b` in organization `<GROQ_ORGANIZATION>` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 9849, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing",
+          "type": "tokens",
+          "code": "rate_limit_exceeded"
+        }
+      },
+      "original_response_sha256": "bb0388fa66d91d019df94da42e104d6943492377bfbc915f7437ab723805b3b8"
+    },
+    {
+      "launch": "native-desktop-demo-rerun-v1/openbot/config_migration/1",
+      "arm": "openbot",
+      "model": "openai/gpt-oss-120b",
+      "status": "completed",
+      "admitted_utc": "2026-10-28T05:09:56.008792+00:00",
+      "reservation_usd": "0.01031640",
+      "request_sha256": "5615d7e0c635ca22f641a4c8b13d59124b80cf07fa343fca7b7512ee9c99a8b3",
+      "input_bytes": 18004,
+      "roles": [
+        "system",
+        "user"
+      ],
+      "message_sha256": [
+        "33dc83f9a4e0ecdec0234f29a1c850fce67bf1f4aa221430b53bf637cb06434c",
+        "84a465d10fcfa3cabe6cff0f22938922bebf11f5839a5a575dd82e4a7d7c83c0"
+      ],
+      "tools_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "tool_names": [],
+      "tool_calls": [],
+      "tool_results": [],
+      "effective_request_sha256": "b7de9bfc916a238d2a8d78b1c26e038dbfb449aed35a7736d6e7501737f256bc",
+      "completed_utc": "2026-10-28T05:09:56.968320+00:00",
+      "http_status": 200,
+      "response": {
+        "id": "chatcmpl-ed574700-4a62-4387-8913-6489498a913f",
+        "object": "chat.completion",
+        "created": 1793164196,
+        "model": "openai/gpt-oss-120b",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Create settings files and migration doc"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "queue_time": 0.276565613,
+          "prompt_tokens": 3872,
+          "prompt_time": 0.218474878,
+          "completion_tokens": 53,
+          "completion_time": 0.110692369,
+          "total_tokens": 3925,
+          "total_time": 0.329167247,
+          "completion_tokens_details": {
+            "reasoning_tokens": 38
+          }
+        },
+        "usage_breakdown": null,
+        "system_fingerprint": "fp_8655ddce88",
+        "x_groq": {
+          "id": "req_01m60emeaxe3xv5k2fg6avte10",
+          "seed": 1814170992
+        },
+        "service_tier": "on_demand"
+      },
+      "original_response_sha256": "2c805e8ae932e141e42f73fe833432a219a8f06d89440addb7d6f4a038e990d4"
+    },
+    {
+      "launch": "native-desktop-demo-rerun-v1/hermes/config_migration/1",
+      "arm": "hermes",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "status": "completed",
+      "admitted_utc": "2026-10-28T05:10:03.349031+00:00",
+      "reservation_usd": "0.0170979160",
+      "request_sha256": "44432303cb81dc1128ca8d0f21f67c4437104baca0b19099adb1d87bf1368e56",
+      "input_bytes": 62547,
+      "roles": [
+        "system",
+        "user"
+      ],
+      "message_sha256": [
+        "d1955379234d142fe331639717e9613a7820ab255a62d8a67bd232483a1ce54a",
+        "05a5a5d2bc17824e62a75f712184dfd174a4b28f0d578be61717f4e00d15a8c0"
+      ],
+      "tools_sha256": "e2e641b6bd949c26434527fc6252fdada3fefc8e0be37c52f804a3d397689110",
+      "tool_names": [
+        "browser_exec",
+        "clarify",
+        "delegate_task",
+        "execute_code",
+        "manage_connections",
+        "memory",
+        "patch",
+        "read_file",
+        "search_files",
+        "skill_manage",
+        "skill_view",
+        "skills_list",
+        "terminal",
+        "text_to_speech",
+        "vision_analyze",
+        "web_extract",
+        "web_search",
+        "write_file",
+        "tool_search",
+        "tool_describe",
+        "tool_call",
+        "message_agent"
+      ],
+      "tool_calls": [],
+      "tool_results": [],
+      "effective_request_sha256": "3ed5b257137faa21d6520a66900a5adbf7b7ff7169ebeb69070d386a6568a437",
+      "completed_utc": "2026-10-28T05:10:07.944700+00:00",
+      "http_status": 200,
+      "response": {
+        "id": "chatcmpl-12f28867-2d39-472b-8feb-7b936dc089d2",
+        "created": 1793164216,
+        "model": "deepseek/deepseek-v4.1-flash",
+        "object": "chat.completion",
+        "choices": [
+          {
+            "finish_reason": "tool_calls",
+            "index": 0,
+            "message": {
+              "content": "I'll create the files in the workspace.\n\n",
+              "role": "assistant",
+              "tool_calls": [
+                {
+                  "function": {
+                    "arguments": "{\"path\": \"/private/tmp/ha-new-demo-workspace-40a67099/settings.json\", \"content\": \"{\\\"version\\\":1,\\\"user\\\":{\\\"color\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n\"}",
+                    "name": "write_file"
+                  },
+                  "id": "chatcmpl-tool-8b895bccd3a509d4",
+                  "type": "function"
+                },
+                {
+                  "function": {
+                    "arguments": "{\"path\": \"/private/tmp/ha-new-demo-workspace-40a67099/settings-v2.json\", \"content\": \"{\\\"version\\\":2,\\\"user\\\":{\\\"theme\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n\"}",
+                    "name": "write_file"
+                  },
+                  "id": "chatcmpl-tool-93770dd7f6503f10",
+                  "type": "function"
+                },
+                {
+                  "function": {
+                    "arguments": "{\"path\": \"/private/tmp/ha-new-demo-workspace-40a67099/MIGRATION.md\", \"content\": \"# Migration: settings v1 → v2\\n\\n## Changes\\n\\n| v1 | v2 |\\n| --- | --- |\\n| `version: 1` | `version: 2` |\\n| `user.color` | `user.theme` |\\n\\n## Field rename: `color` → `theme`\\n\\nThe user's colour preference moved from `user.color` to `user.theme`. The value is\\nunchanged — only the key is renamed. In v1 the key was `color`:\\n\\n```json\\n{\\\"version\\\":1,\\\"user\\\":{\\\"color\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n```\\n\\nIn v2 the same value lives under `theme`:\\n\\n```json\\n{\\\"version\\\":2,\\\"user\\\":{\\\"theme\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n```\\n\\n## Version bump: 1 → 2\\n\\n`version` is incremented from `1` to `2` to mark the document as using the new\\nschema. A reader that sees `version: 2` should expect `user.theme` and must not\\nlook for `user.color`.\\n\\n## Preserved fields\\n\\nEverything unrelated to the rename is carried over untouched:\\n\\n- `user.name` — unchanged (`\\\"Ada\\\"`)\\n- `keep.enabled` — unchanged (`true`)\\n\\n## Migration steps\\n\\n1. Read the v1 document.\\n2. Set `version` to `2`.\\n3. If `user.color` exists, move its value to `user.theme` and remove `user.color`.\\n4. Leave all other fields as they are.\\n5. Write the result as the v2 document.\\n\\n## Notes\\n\\n- The migration is not reversible without losing the original key name; keep a\\n  copy of the v1 file if rollback matters.\\n- `settings.json` (v1) is left unchanged by this migration; the v2 result is\\n  written to `settings-v2.json`.\\n\"}",
+                    "name": "write_file"
+                  },
+                  "id": "chatcmpl-tool-8df4b440a8c7ec89",
+                  "type": "function"
+                }
+              ],
+              "provider_specific_fields": {
+                "refusal": null
+              }
+            },
+            "provider_specific_fields": {
+              "routed_experts": null,
+              "token_ids": null,
+              "stop_reason": null
+            }
+          }
+        ],
+        "usage": {
+          "completion_tokens": 649,
+          "prompt_tokens": 15023,
+          "total_tokens": 15672,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "cached_tokens": 384,
+            "created_cache_tokens": 14592
+          },
+          "cost": 0.001886207,
+          "cost_details": {
+            "source": "gateway_computed_spend",
+            "floor_applied": false
+          }
+        }
+      },
+      "original_response_sha256": "1ef754b9644758f0db96b158eefb09e80fbdd1a53afd34b61e6a54c6f7fced0e"
+    },
+    {
+      "launch": "native-desktop-demo-rerun-v1/hermes/config_migration/1",
+      "arm": "hermes",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "status": "completed",
+      "admitted_utc": "2026-10-28T05:10:11.331234+00:00",
+      "reservation_usd": "0.0178626000",
+      "request_sha256": "a38aac95da9d07cf5ad2e54a42f5b63031693f57adc5802d3fc9753918b16493",
+      "input_bytes": 66154,
+      "roles": [
+        "system",
+        "user",
+        "assistant",
+        "tool",
+        "tool",
+        "tool"
+      ],
+      "message_sha256": [
+        "d1955379234d142fe331639717e9613a7820ab255a62d8a67bd232483a1ce54a",
+        "05a5a5d2bc17824e62a75f712184dfd174a4b28f0d578be61717f4e00d15a8c0",
+        "d388c81cf050170b0867cd577e1cdcaa98ae7feb496b2f89c44f68da195734ed",
+        "ab206a380db439bcb4e2d8ea1ee99d90331ad413cd8651d212a0428089a7474c",
+        "40352e5d3d128baf2bc8e706b6d8bfd1771d4d549ed0b1d031fbf40bb2911066",
+        "7a9fc872402d1ba82829a8ef785fb42102b013a54b53df5752637f9ea1296b7d"
+      ],
+      "tools_sha256": "e2e641b6bd949c26434527fc6252fdada3fefc8e0be37c52f804a3d397689110",
+      "tool_names": [
+        "browser_exec",
+        "clarify",
+        "delegate_task",
+        "execute_code",
+        "manage_connections",
+        "memory",
+        "patch",
+        "read_file",
+        "search_files",
+        "skill_manage",
+        "skill_view",
+        "skills_list",
+        "terminal",
+        "text_to_speech",
+        "vision_analyze",
+        "web_extract",
+        "web_search",
+        "write_file",
+        "tool_search",
+        "tool_describe",
+        "tool_call",
+        "message_agent"
+      ],
+      "tool_calls": [
+        [
+          {
+            "id": "call_4683a1b13620",
+            "type": "function",
+            "function": {
+              "name": "write_file",
+              "arguments": "{\"content\":\"{\\\"version\\\":1,\\\"user\\\":{\\\"color\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n\",\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/settings.json\"}"
+            }
+          },
+          {
+            "id": "call_31c87f94183f",
+            "type": "function",
+            "function": {
+              "name": "write_file",
+              "arguments": "{\"content\":\"{\\\"version\\\":2,\\\"user\\\":{\\\"theme\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n\",\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/settings-v2.json\"}"
+            }
+          },
+          {
+            "id": "call_c1fad8eb64b7",
+            "type": "function",
+            "function": {
+              "name": "write_file",
+              "arguments": "{\"content\":\"# Migration: settings v1 \\u2192 v2\\n\\n## Changes\\n\\n| v1 | v2 |\\n| --- | --- |\\n| `version: 1` | `version: 2` |\\n| `user.color` | `user.theme` |\\n\\n## Field rename: `color` \\u2192 `theme`\\n\\nThe user's colour preference moved from `user.color` to `user.theme`. The value is\\nunchanged \\u2014 only the key is renamed. In v1 the key was `color`:\\n\\n```json\\n{\\\"version\\\":1,\\\"user\\\":{\\\"color\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n```\\n\\nIn v2 the same value lives under `theme`:\\n\\n```json\\n{\\\"version\\\":2,\\\"user\\\":{\\\"theme\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n```\\n\\n## Version bump: 1 \\u2192 2\\n\\n`version` is incremented from `1` to `2` to mark the document as using the new\\nschema. A reader that sees `version: 2` should expect `user.theme` and must not\\nlook for `user.color`.\\n\\n## Preserved fields\\n\\nEverything unrelated to the rename is carried over untouched:\\n\\n- `user.name` \\u2014 unchanged (`\\\"Ada\\\"`)\\n- `keep.enabled` \\u2014 unchanged (`true`)\\n\\n## Migration steps\\n\\n1. Read the v1 document.\\n2. Set `version` to `2`.\\n3. If `user.color` exists, move its value to `user.theme` and remove `user.color`.\\n4. Leave all other fields as they are.\\n5. Write the result as the v2 document.\\n\\n## Notes\\n\\n- The migration is not reversible without losing the original key name; keep a\\n  copy of the v1 file if rollback matters.\\n- `settings.json` (v1) is left unchanged by this migration; the v2 result is\\n  written to `settings-v2.json`.\\n\",\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/MIGRATION.md\"}"
+            }
+          }
+        ]
+      ],
+      "tool_results": [
+        {
+          "role": "tool",
+          "content": "{\"bytes_written\": 75, \"dirs_created\": true, \"verified\": true, \"lint\": {\"status\": \"ok\", \"output\": \"\"}, \"resolved_path\": \"/private/tmp/ha-new-demo-workspace-40a67099/settings.json\", \"files_modified\": [\"/private/tmp/ha-new-demo-workspace-40a67099/settings.json\"]}",
+          "tool_call_id": "call_4683a1b13620"
+        },
+        {
+          "role": "tool",
+          "content": "{\"bytes_written\": 75, \"dirs_created\": true, \"verified\": true, \"lint\": {\"status\": \"ok\", \"output\": \"\"}, \"resolved_path\": \"/private/tmp/ha-new-demo-workspace-40a67099/settings-v2.json\", \"files_modified\": [\"/private/tmp/ha-new-demo-workspace-40a67099/settings-v2.json\"]}",
+          "tool_call_id": "call_31c87f94183f"
+        },
+        {
+          "role": "tool",
+          "content": "{\"bytes_written\": 1390, \"dirs_created\": true, \"verified\": true, \"lint\": {\"status\": \"skipped\", \"message\": \"No linter for .md files\"}, \"resolved_path\": \"/private/tmp/ha-new-demo-workspace-40a67099/MIGRATION.md\", \"files_modified\": [\"/private/tmp/ha-new-demo-workspace-40a67099/MIGRATION.md\"]}",
+          "tool_call_id": "call_c1fad8eb64b7"
+        }
+      ],
+      "effective_request_sha256": "941cda3b95ed25a17ee59d33ccc904cd785d8ab6126f11d2e499bd668fb8bd19",
+      "completed_utc": "2026-10-28T05:10:14.402970+00:00",
+      "http_status": 200,
+      "response": {
+        "id": "chatcmpl-b12ab5cf-8195-451c-9d6b-160e23ad068a",
+        "created": 1793164225,
+        "model": "deepseek/deepseek-v4.1-flash",
+        "object": "chat.completion",
+        "choices": [
+          {
+            "finish_reason": "tool_calls",
+            "index": 0,
+            "message": {
+              "content": "Now reading them back to verify.\n\n",
+              "role": "assistant",
+              "tool_calls": [
+                {
+                  "function": {
+                    "arguments": "{\"path\": \"/private/tmp/ha-new-demo-workspace-40a67099/settings.json\"}",
+                    "name": "read_file"
+                  },
+                  "id": "chatcmpl-tool-ad8a5ee97a156870",
+                  "type": "function"
+                },
+                {
+                  "function": {
+                    "arguments": "{\"path\": \"/private/tmp/ha-new-demo-workspace-40a67099/settings-v2.json\"}",
+                    "name": "read_file"
+                  },
+                  "id": "chatcmpl-tool-882252fbcc944341",
+                  "type": "function"
+                },
+                {
+                  "function": {
+                    "arguments": "{\"path\": \"/private/tmp/ha-new-demo-workspace-40a67099/MIGRATION.md\"}",
+                    "name": "read_file"
+                  },
+                  "id": "chatcmpl-tool-bb941958c696c057",
+                  "type": "function"
+                }
+              ],
+              "provider_specific_fields": {
+                "refusal": null
+              }
+            },
+            "provider_specific_fields": {
+              "token_ids": null,
+              "stop_reason": null,
+              "routed_experts": null
+            }
+          }
+        ],
+        "usage": {
+          "completion_tokens": 157,
+          "prompt_tokens": 15972,
+          "total_tokens": 16129,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "cached_tokens": 14976,
+            "created_cache_tokens": 896
+          },
+          "cost": 0.000246021,
+          "cost_details": {
+            "source": "gateway_computed_spend",
+            "floor_applied": false
+          }
+        }
+      },
+      "original_response_sha256": "5a7a0c788ea1662805cf0ad429bfdc80ca797706048cb9a432227ffcd10fac6f"
+    },
+    {
+      "launch": "native-desktop-demo-rerun-v1/hermes/config_migration/1",
+      "arm": "hermes",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "status": "completed",
+      "admitted_utc": "2026-10-28T05:10:14.477928+00:00",
+      "reservation_usd": "0.0187031800",
+      "request_sha256": "0a1e3b7bad7abff1c71ae3c2fbf034fde37a30bdaddeaa1ad47a5bdaf71f2667",
+      "input_bytes": 70119,
+      "roles": [
+        "system",
+        "user",
+        "assistant",
+        "tool",
+        "tool",
+        "tool",
+        "assistant",
+        "tool",
+        "tool",
+        "tool"
+      ],
+      "message_sha256": [
+        "d1955379234d142fe331639717e9613a7820ab255a62d8a67bd232483a1ce54a",
+        "05a5a5d2bc17824e62a75f712184dfd174a4b28f0d578be61717f4e00d15a8c0",
+        "d388c81cf050170b0867cd577e1cdcaa98ae7feb496b2f89c44f68da195734ed",
+        "ab206a380db439bcb4e2d8ea1ee99d90331ad413cd8651d212a0428089a7474c",
+        "40352e5d3d128baf2bc8e706b6d8bfd1771d4d549ed0b1d031fbf40bb2911066",
+        "7a9fc872402d1ba82829a8ef785fb42102b013a54b53df5752637f9ea1296b7d",
+        "17bcd2cd86d42df5b05f68388b501cc6a5b211f2dd26cb3237e224a4db4ea998",
+        "cbed081095d1159301c1fb40204a23dfa5f47b2b4265b4a30eca2c4f7ea432b5",
+        "da3bc2cdc85df5b33e38115cc0e901590186b970312a28a54ea5d435dd0b9695",
+        "3a4e42085475fd17dbeb342c7742b798352f0194a71ca4fc05e9c076f4757197"
+      ],
+      "tools_sha256": "e2e641b6bd949c26434527fc6252fdada3fefc8e0be37c52f804a3d397689110",
+      "tool_names": [
+        "browser_exec",
+        "clarify",
+        "delegate_task",
+        "execute_code",
+        "manage_connections",
+        "memory",
+        "patch",
+        "read_file",
+        "search_files",
+        "skill_manage",
+        "skill_view",
+        "skills_list",
+        "terminal",
+        "text_to_speech",
+        "vision_analyze",
+        "web_extract",
+        "web_search",
+        "write_file",
+        "tool_search",
+        "tool_describe",
+        "tool_call",
+        "message_agent"
+      ],
+      "tool_calls": [
+        [
+          {
+            "id": "call_4683a1b13620",
+            "type": "function",
+            "function": {
+              "name": "write_file",
+              "arguments": "{\"content\":\"{\\\"version\\\":1,\\\"user\\\":{\\\"color\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n\",\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/settings.json\"}"
+            }
+          },
+          {
+            "id": "call_31c87f94183f",
+            "type": "function",
+            "function": {
+              "name": "write_file",
+              "arguments": "{\"content\":\"{\\\"version\\\":2,\\\"user\\\":{\\\"theme\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n\",\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/settings-v2.json\"}"
+            }
+          },
+          {
+            "id": "call_c1fad8eb64b7",
+            "type": "function",
+            "function": {
+              "name": "write_file",
+              "arguments": "{\"content\":\"# Migration: settings v1 \\u2192 v2\\n\\n## Changes\\n\\n| v1 | v2 |\\n| --- | --- |\\n| `version: 1` | `version: 2` |\\n| `user.color` | `user.theme` |\\n\\n## Field rename: `color` \\u2192 `theme`\\n\\nThe user's colour preference moved from `user.color` to `user.theme`. The value is\\nunchanged \\u2014 only the key is renamed. In v1 the key was `color`:\\n\\n```json\\n{\\\"version\\\":1,\\\"user\\\":{\\\"color\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n```\\n\\nIn v2 the same value lives under `theme`:\\n\\n```json\\n{\\\"version\\\":2,\\\"user\\\":{\\\"theme\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n```\\n\\n## Version bump: 1 \\u2192 2\\n\\n`version` is incremented from `1` to `2` to mark the document as using the new\\nschema. A reader that sees `version: 2` should expect `user.theme` and must not\\nlook for `user.color`.\\n\\n## Preserved fields\\n\\nEverything unrelated to the rename is carried over untouched:\\n\\n- `user.name` \\u2014 unchanged (`\\\"Ada\\\"`)\\n- `keep.enabled` \\u2014 unchanged (`true`)\\n\\n## Migration steps\\n\\n1. Read the v1 document.\\n2. Set `version` to `2`.\\n3. If `user.color` exists, move its value to `user.theme` and remove `user.color`.\\n4. Leave all other fields as they are.\\n5. Write the result as the v2 document.\\n\\n## Notes\\n\\n- The migration is not reversible without losing the original key name; keep a\\n  copy of the v1 file if rollback matters.\\n- `settings.json` (v1) is left unchanged by this migration; the v2 result is\\n  written to `settings-v2.json`.\\n\",\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/MIGRATION.md\"}"
+            }
+          }
+        ],
+        [
+          {
+            "id": "call_75c861c1c44c",
+            "type": "function",
+            "function": {
+              "name": "read_file",
+              "arguments": "{\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/settings.json\"}"
+            }
+          },
+          {
+            "id": "call_3b2ddba861f8",
+            "type": "function",
+            "function": {
+              "name": "read_file",
+              "arguments": "{\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/settings-v2.json\"}"
+            }
+          },
+          {
+            "id": "call_7029f0d2a5c6",
+            "type": "function",
+            "function": {
+              "name": "read_file",
+              "arguments": "{\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/MIGRATION.md\"}"
+            }
+          }
+        ]
+      ],
+      "tool_results": [
+        {
+          "role": "tool",
+          "content": "{\"bytes_written\": 75, \"dirs_created\": true, \"verified\": true, \"lint\": {\"status\": \"ok\", \"output\": \"\"}, \"resolved_path\": \"/private/tmp/ha-new-demo-workspace-40a67099/settings.json\", \"files_modified\": [\"/private/tmp/ha-new-demo-workspace-40a67099/settings.json\"]}",
+          "tool_call_id": "call_4683a1b13620"
+        },
+        {
+          "role": "tool",
+          "content": "{\"bytes_written\": 75, \"dirs_created\": true, \"verified\": true, \"lint\": {\"status\": \"ok\", \"output\": \"\"}, \"resolved_path\": \"/private/tmp/ha-new-demo-workspace-40a67099/settings-v2.json\", \"files_modified\": [\"/private/tmp/ha-new-demo-workspace-40a67099/settings-v2.json\"]}",
+          "tool_call_id": "call_31c87f94183f"
+        },
+        {
+          "role": "tool",
+          "content": "{\"bytes_written\": 1390, \"dirs_created\": true, \"verified\": true, \"lint\": {\"status\": \"skipped\", \"message\": \"No linter for .md files\"}, \"resolved_path\": \"/private/tmp/ha-new-demo-workspace-40a67099/MIGRATION.md\", \"files_modified\": [\"/private/tmp/ha-new-demo-workspace-40a67099/MIGRATION.md\"]}",
+          "tool_call_id": "call_c1fad8eb64b7"
+        },
+        {
+          "role": "tool",
+          "content": "{\"content\": \"1|{\\\"version\\\":1,\\\"user\\\":{\\\"color\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\", \"total_lines\": 1, \"file_size\": 75, \"truncated\": false, \"is_binary\": false, \"is_image\": false, \"not_found\": false, \"content_format\": \"Numbered preview: each leading LINE_NUMBER| is display metadata. The source text begins after that first prefix; its own separators and whitespace are unchanged. Parse the actual file, not the preview's line-number separator.\"}",
+          "tool_call_id": "call_75c861c1c44c"
+        },
+        {
+          "role": "tool",
+          "content": "{\"content\": \"1|{\\\"version\\\":2,\\\"user\\\":{\\\"theme\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\", \"total_lines\": 1, \"file_size\": 75, \"truncated\": false, \"is_binary\": false, \"is_image\": false, \"not_found\": false, \"content_format\": \"Numbered preview: each leading LINE_NUMBER| is display metadata. The source text begins after that first prefix; its own separators and whitespace are unchanged. Parse the actual file, not the preview's line-number separator.\"}",
+          "tool_call_id": "call_3b2ddba861f8"
+        },
+        {
+          "role": "tool",
+          "content": "{\"content\": \"1|# Migration: settings v1 → v2\\n2|\\n3|## Changes\\n4|\\n5|| v1 | v2 |\\n6|| --- | --- |\\n7|| `version: 1` | `version: 2` |\\n8|| `user.color` | `user.theme` |\\n9|\\n10|## Field rename: `color` → `theme`\\n11|\\n12|The user's colour preference moved from `user.color` to `user.theme`. The value is\\n13|unchanged — only the key is renamed. In v1 the key was `color`:\\n14|\\n15|```json\\n16|{\\\"version\\\":1,\\\"user\\\":{\\\"color\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n17|```\\n18|\\n19|In v2 the same value lives under `theme`:\\n20|\\n21|```json\\n22|{\\\"version\\\":2,\\\"user\\\":{\\\"theme\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n23|```\\n24|\\n25|## Version bump: 1 → 2\\n26|\\n27|`version` is incremented from `1` to `2` to mark the document as using the new\\n28|schema. A reader that sees `version: 2` should expect `user.theme` and must not\\n29|look for `user.color`.\\n30|\\n31|## Preserved fields\\n32|\\n33|Everything unrelated to the rename is carried over untouched:\\n34|\\n35|- `user.name` — unchanged (`\\\"Ada\\\"`)\\n36|- `keep.enabled` — unchanged (`true`)\\n37|\\n38|## Migration steps\\n39|\\n40|1. Read the v1 document.\\n41|2. Set `version` to `2`.\\n42|3. If `user.color` exists, move its value to `user.theme` and remove `user.color`.\\n43|4. Leave all other fields as they are.\\n44|5. Write the result as the v2 document.\\n45|\\n46|## Notes\\n47|\\n48|- The migration is not reversible without losing the original key name; keep a\\n49|  copy of the v1 file if rollback matters.\\n50|- `settings.json` (v1) is left unchanged by this migration; the v2 result is\\n51|  written to `settings-v2.json`.\", \"total_lines\": 51, \"file_size\": 1390, \"truncated\": false, \"is_binary\": false, \"is_image\": false, \"not_found\": false, \"content_format\": \"Numbered preview: each leading LINE_NUMBER| is display metadata. The source text begins after that first prefix; its own separators and whitespace are unchanged. Parse the actual file, not the preview's line-number separator.\"}",
+          "tool_call_id": "call_7029f0d2a5c6"
+        }
+      ],
+      "effective_request_sha256": "6123be81edbf1ca2cf63a6e9be0393ae6ea64cca84f11788d496f32516eac819",
+      "completed_utc": "2026-10-28T05:10:17.189106+00:00",
+      "http_status": 200,
+      "response": {
+        "id": "chatcmpl-f1cbd619-b2f4-46a8-8ba1-6db5c67fb642",
+        "created": 1793164227,
+        "model": "deepseek/deepseek-v4.1-flash",
+        "object": "chat.completion",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "message": {
+              "content": "Created three files in `/private/tmp/ha-new-demo-workspace-40a67099/`, all read back and verified:\n\n- **settings.json** (75 bytes) — exactly `{\"version\":1,\"user\":{\"color\":\"blue\",\"name\":\"Ada\"},\"keep\":{\"enabled\":true}}`, byte-for-byte as specified. Not touched after creation.\n- **settings-v2.json** (75 bytes) — `{\"version\":2,\"user\":{\"theme\":\"blue\",\"name\":\"Ada\"},\"keep\":{\"enabled\":true}}`. `version` bumped to 2, `user.color` renamed to `user.theme` (value `\"blue\"` preserved), `user.name` and `keep.enabled` carried over unchanged.\n- **MIGRATION.md** (1390 bytes) — documents the `color` → `theme` rename and the `1` → `2` version bump, with before/after JSON, the list of preserved fields, and step-by-step migration instructions.\n\nNo network, installs, or delegation used.",
+              "role": "assistant",
+              "provider_specific_fields": {
+                "refusal": null
+              }
+            },
+            "provider_specific_fields": {
+              "token_ids": null,
+              "stop_reason": null,
+              "routed_experts": null
+            }
+          }
+        ],
+        "usage": {
+          "completion_tokens": 220,
+          "prompt_tokens": 17079,
+          "total_tokens": 17299,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "cached_tokens": 16128,
+            "created_cache_tokens": 896
+          },
+          "cost": 0.000278178,
+          "cost_details": {
+            "source": "gateway_computed_spend",
+            "floor_applied": false
+          }
+        }
+      },
+      "original_response_sha256": "33e8369bab524a95f92db612f1296adf74537437d708ccfb131eb868cf5640e8"
+    },
+    {
+      "launch": "native-desktop-demo-rerun-v1/hermes/config_migration/1",
+      "arm": "hermes",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "status": "completed",
+      "admitted_utc": "2026-10-28T05:10:17.248248+00:00",
+      "reservation_usd": "0.0198729960",
+      "request_sha256": "94ef76ca1420dc664529226697667324c7711fa7456dc82b43d307dbd9ffef6a",
+      "input_bytes": 75637,
+      "roles": [
+        "system",
+        "user",
+        "assistant",
+        "tool",
+        "tool",
+        "tool",
+        "assistant",
+        "tool",
+        "tool",
+        "tool",
+        "assistant",
+        "user"
+      ],
+      "message_sha256": [
+        "d1955379234d142fe331639717e9613a7820ab255a62d8a67bd232483a1ce54a",
+        "05a5a5d2bc17824e62a75f712184dfd174a4b28f0d578be61717f4e00d15a8c0",
+        "d388c81cf050170b0867cd577e1cdcaa98ae7feb496b2f89c44f68da195734ed",
+        "ab206a380db439bcb4e2d8ea1ee99d90331ad413cd8651d212a0428089a7474c",
+        "40352e5d3d128baf2bc8e706b6d8bfd1771d4d549ed0b1d031fbf40bb2911066",
+        "7a9fc872402d1ba82829a8ef785fb42102b013a54b53df5752637f9ea1296b7d",
+        "17bcd2cd86d42df5b05f68388b501cc6a5b211f2dd26cb3237e224a4db4ea998",
+        "cbed081095d1159301c1fb40204a23dfa5f47b2b4265b4a30eca2c4f7ea432b5",
+        "da3bc2cdc85df5b33e38115cc0e901590186b970312a28a54ea5d435dd0b9695",
+        "3a4e42085475fd17dbeb342c7742b798352f0194a71ca4fc05e9c076f4757197",
+        "9b81c881dcc2a593ffa3edfac56f5402ba888646087373b8de378d41c58120e1",
+        "43b419391274b39f4e2185ddd5a9cda1fa23fccd862d46762f4b0621f291ae1c"
+      ],
+      "tools_sha256": "e2e641b6bd949c26434527fc6252fdada3fefc8e0be37c52f804a3d397689110",
+      "tool_names": [
+        "browser_exec",
+        "clarify",
+        "delegate_task",
+        "execute_code",
+        "manage_connections",
+        "memory",
+        "patch",
+        "read_file",
+        "search_files",
+        "skill_manage",
+        "skill_view",
+        "skills_list",
+        "terminal",
+        "text_to_speech",
+        "vision_analyze",
+        "web_extract",
+        "web_search",
+        "write_file",
+        "tool_search",
+        "tool_describe",
+        "tool_call",
+        "message_agent"
+      ],
+      "tool_calls": [
+        [
+          {
+            "id": "call_4683a1b13620",
+            "type": "function",
+            "function": {
+              "name": "write_file",
+              "arguments": "{\"content\":\"{\\\"version\\\":1,\\\"user\\\":{\\\"color\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n\",\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/settings.json\"}"
+            }
+          },
+          {
+            "id": "call_31c87f94183f",
+            "type": "function",
+            "function": {
+              "name": "write_file",
+              "arguments": "{\"content\":\"{\\\"version\\\":2,\\\"user\\\":{\\\"theme\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n\",\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/settings-v2.json\"}"
+            }
+          },
+          {
+            "id": "call_c1fad8eb64b7",
+            "type": "function",
+            "function": {
+              "name": "write_file",
+              "arguments": "{\"content\":\"# Migration: settings v1 \\u2192 v2\\n\\n## Changes\\n\\n| v1 | v2 |\\n| --- | --- |\\n| `version: 1` | `version: 2` |\\n| `user.color` | `user.theme` |\\n\\n## Field rename: `color` \\u2192 `theme`\\n\\nThe user's colour preference moved from `user.color` to `user.theme`. The value is\\nunchanged \\u2014 only the key is renamed. In v1 the key was `color`:\\n\\n```json\\n{\\\"version\\\":1,\\\"user\\\":{\\\"color\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n```\\n\\nIn v2 the same value lives under `theme`:\\n\\n```json\\n{\\\"version\\\":2,\\\"user\\\":{\\\"theme\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n```\\n\\n## Version bump: 1 \\u2192 2\\n\\n`version` is incremented from `1` to `2` to mark the document as using the new\\nschema. A reader that sees `version: 2` should expect `user.theme` and must not\\nlook for `user.color`.\\n\\n## Preserved fields\\n\\nEverything unrelated to the rename is carried over untouched:\\n\\n- `user.name` \\u2014 unchanged (`\\\"Ada\\\"`)\\n- `keep.enabled` \\u2014 unchanged (`true`)\\n\\n## Migration steps\\n\\n1. Read the v1 document.\\n2. Set `version` to `2`.\\n3. If `user.color` exists, move its value to `user.theme` and remove `user.color`.\\n4. Leave all other fields as they are.\\n5. Write the result as the v2 document.\\n\\n## Notes\\n\\n- The migration is not reversible without losing the original key name; keep a\\n  copy of the v1 file if rollback matters.\\n- `settings.json` (v1) is left unchanged by this migration; the v2 result is\\n  written to `settings-v2.json`.\\n\",\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/MIGRATION.md\"}"
+            }
+          }
+        ],
+        [
+          {
+            "id": "call_75c861c1c44c",
+            "type": "function",
+            "function": {
+              "name": "read_file",
+              "arguments": "{\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/settings.json\"}"
+            }
+          },
+          {
+            "id": "call_3b2ddba861f8",
+            "type": "function",
+            "function": {
+              "name": "read_file",
+              "arguments": "{\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/settings-v2.json\"}"
+            }
+          },
+          {
+            "id": "call_7029f0d2a5c6",
+            "type": "function",
+            "function": {
+              "name": "read_file",
+              "arguments": "{\"path\":\"/private/tmp/ha-new-demo-workspace-40a67099/MIGRATION.md\"}"
+            }
+          }
+        ]
+      ],
+      "tool_results": [
+        {
+          "role": "tool",
+          "content": "{\"bytes_written\": 75, \"dirs_created\": true, \"verified\": true, \"lint\": {\"status\": \"ok\", \"output\": \"\"}, \"resolved_path\": \"/private/tmp/ha-new-demo-workspace-40a67099/settings.json\", \"files_modified\": [\"/private/tmp/ha-new-demo-workspace-40a67099/settings.json\"]}",
+          "tool_call_id": "call_4683a1b13620"
+        },
+        {
+          "role": "tool",
+          "content": "{\"bytes_written\": 75, \"dirs_created\": true, \"verified\": true, \"lint\": {\"status\": \"ok\", \"output\": \"\"}, \"resolved_path\": \"/private/tmp/ha-new-demo-workspace-40a67099/settings-v2.json\", \"files_modified\": [\"/private/tmp/ha-new-demo-workspace-40a67099/settings-v2.json\"]}",
+          "tool_call_id": "call_31c87f94183f"
+        },
+        {
+          "role": "tool",
+          "content": "{\"bytes_written\": 1390, \"dirs_created\": true, \"verified\": true, \"lint\": {\"status\": \"skipped\", \"message\": \"No linter for .md files\"}, \"resolved_path\": \"/private/tmp/ha-new-demo-workspace-40a67099/MIGRATION.md\", \"files_modified\": [\"/private/tmp/ha-new-demo-workspace-40a67099/MIGRATION.md\"]}",
+          "tool_call_id": "call_c1fad8eb64b7"
+        },
+        {
+          "role": "tool",
+          "content": "{\"content\": \"1|{\\\"version\\\":1,\\\"user\\\":{\\\"color\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\", \"total_lines\": 1, \"file_size\": 75, \"truncated\": false, \"is_binary\": false, \"is_image\": false, \"not_found\": false, \"content_format\": \"Numbered preview: each leading LINE_NUMBER| is display metadata. The source text begins after that first prefix; its own separators and whitespace are unchanged. Parse the actual file, not the preview's line-number separator.\"}",
+          "tool_call_id": "call_75c861c1c44c"
+        },
+        {
+          "role": "tool",
+          "content": "{\"content\": \"1|{\\\"version\\\":2,\\\"user\\\":{\\\"theme\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\", \"total_lines\": 1, \"file_size\": 75, \"truncated\": false, \"is_binary\": false, \"is_image\": false, \"not_found\": false, \"content_format\": \"Numbered preview: each leading LINE_NUMBER| is display metadata. The source text begins after that first prefix; its own separators and whitespace are unchanged. Parse the actual file, not the preview's line-number separator.\"}",
+          "tool_call_id": "call_3b2ddba861f8"
+        },
+        {
+          "role": "tool",
+          "content": "{\"content\": \"1|# Migration: settings v1 → v2\\n2|\\n3|## Changes\\n4|\\n5|| v1 | v2 |\\n6|| --- | --- |\\n7|| `version: 1` | `version: 2` |\\n8|| `user.color` | `user.theme` |\\n9|\\n10|## Field rename: `color` → `theme`\\n11|\\n12|The user's colour preference moved from `user.color` to `user.theme`. The value is\\n13|unchanged — only the key is renamed. In v1 the key was `color`:\\n14|\\n15|```json\\n16|{\\\"version\\\":1,\\\"user\\\":{\\\"color\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n17|```\\n18|\\n19|In v2 the same value lives under `theme`:\\n20|\\n21|```json\\n22|{\\\"version\\\":2,\\\"user\\\":{\\\"theme\\\":\\\"blue\\\",\\\"name\\\":\\\"Ada\\\"},\\\"keep\\\":{\\\"enabled\\\":true}}\\n23|```\\n24|\\n25|## Version bump: 1 → 2\\n26|\\n27|`version` is incremented from `1` to `2` to mark the document as using the new\\n28|schema. A reader that sees `version: 2` should expect `user.theme` and must not\\n29|look for `user.color`.\\n30|\\n31|## Preserved fields\\n32|\\n33|Everything unrelated to the rename is carried over untouched:\\n34|\\n35|- `user.name` — unchanged (`\\\"Ada\\\"`)\\n36|- `keep.enabled` — unchanged (`true`)\\n37|\\n38|## Migration steps\\n39|\\n40|1. Read the v1 document.\\n41|2. Set `version` to `2`.\\n42|3. If `user.color` exists, move its value to `user.theme` and remove `user.color`.\\n43|4. Leave all other fields as they are.\\n44|5. Write the result as the v2 document.\\n45|\\n46|## Notes\\n47|\\n48|- The migration is not reversible without losing the original key name; keep a\\n49|  copy of the v1 file if rollback matters.\\n50|- `settings.json` (v1) is left unchanged by this migration; the v2 result is\\n51|  written to `settings-v2.json`.\", \"total_lines\": 51, \"file_size\": 1390, \"truncated\": false, \"is_binary\": false, \"is_image\": false, \"not_found\": false, \"content_format\": \"Numbered preview: each leading LINE_NUMBER| is display metadata. The source text begins after that first prefix; its own separators and whitespace are unchanged. Parse the actual file, not the preview's line-number separator.\"}",
+          "tool_call_id": "call_7029f0d2a5c6"
+        }
+      ],
+      "effective_request_sha256": "2c4d36dbd4a76c106de7aa902eb61e98e250e1f5691dc7953f1c15a10f961d8c",
+      "completed_utc": "2026-10-28T05:10:21.579326+00:00",
+      "http_status": 200,
+      "response": {
+        "id": "chatcmpl-6c35e071-371c-41e5-8e53-46ed6acd768b",
+        "created": 1793164231,
+        "model": "deepseek/deepseek-v4.1-flash",
+        "object": "chat.completion",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "message": {
+              "content": "All three deliverables are present and correct in `/private/tmp/ha-new-demo-workspace-40a67099/`:\n\n- **settings.json** — `{\"version\":1,\"user\":{\"color\":\"blue\",\"name\":\"Ada\"},\"keep\":{\"enabled\":true}}` — exact match to the requested object, unchanged after creation.\n- **settings-v2.json** — `{\"version\":2,\"user\":{\"theme\":\"blue\",\"name\":\"Ada\"},\"keep\":{\"enabled\":true}}` — `version` 1→2, `user.color` renamed to `user.theme` with value `\"blue\"` preserved, `user.name` (`\"Ada\"`) and `keep.enabled` (`true`) untouched.\n- **MIGRATION.md** — explains the `color` → `theme` rename and the `1` → `2` version bump, with before/after JSON, preserved fields, and migration steps.\n\nVerified by reading each file back; no network, installs, or delegation used.",
+              "role": "assistant",
+              "provider_specific_fields": {
+                "refusal": null
+              }
+            },
+            "provider_specific_fields": {
+              "stop_reason": null,
+              "token_ids": null,
+              "routed_experts": null
+            }
+          }
+        ],
+        "usage": {
+          "completion_tokens": 213,
+          "prompt_tokens": 18500,
+          "total_tokens": 18713,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "cached_tokens": 17280,
+            "created_cache_tokens": 1152
+          },
+          "cost": 0.000307709,
+          "cost_details": {
+            "source": "gateway_computed_spend",
+            "floor_applied": false
+          }
+        }
+      },
+      "original_response_sha256": "bac326d92f42b2ee86c7a34436e29b5b41b5cb040960071b2f049e8abe0bdea3"
+    }
+  ],
+  "billing": {
+    "approved_total_cap_usd": "6.00",
+    "reserved_total_usd": "5.0914842480",
+    "no_previous_reservations_refunded": true,
+    "reported_hermes_phase_cost_usd": "0.002718115",
+    "reported_cost_is_invoice": false,
+    "openbot_fallback_cost": "Native provider/model is labeled Free. No independent invoice or upstream wire-usage receipt was captured for that route."
+  },
+  "limits": [
+    "Both completed runs pass the same three narrow final-file checks. This is not an overall product ranking or evidence of general task success probability.",
+    "The requested original JSON was created as part of the user task. Its final equality is checked; this alone does not prove the entire history of writes.",
+    "The migration-note check verifies named changes are mentioned; it does not certify every explanatory sentence. Raw notes are included.",
+    "Hermes' note contains an overbroad statement that the rename is not reversible. The field rename itself can be reversed; this extra advice is not scored by the frozen artifact oracle.",
+    "OpenBot first hit a Groq quota limit, then finished after a user-authorized manual model switch. This is a retained failed attempt and a successful fallback, not a single-attempt model win.",
+    "The successful setups use different provider routes, native prompts, effort settings and prior context. OpenBot's creation flow wraps the initial task as agent instructions. The fallback receives the same task text as the Hermes user request.",
+    "The native OpenCode free fallback bypasses our controlled proxy; its request, output and reasoning settings are owned by that native provider. Do not claim identical enforced effort or compare raw timings.",
+    "Hermes ran in a newly built isolated instance from 40a67099. The user's installed Hermes instance was not used for the task.",
+    "No continuous screen recording was captured. The video uses actual native app screenshots at selected observed states, with display durations chosen for readability."
+  ],
+  "winner": null,
+  "quality_review": {
+    "protocol": "existing-output-quality-review-v1",
+    "reviewed_utc": "2026-10-28T05:34:41.362250+00:00",
+    "new_inference_calls": 0,
+    "quality_review_was_predeclared_before_runs": false,
+    "original_task_contracts_unchanged": true,
+    "scope": "Reanalysis of saved real outputs. Earlier controlled-model backend tasks and the later native desktop demo are separate comparisons.",
+    "backend": {
+      "protocol": "model-terminal-explicit-schema-v1",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "provider": "Nous Portal",
+      "source_revisions": {
+        "hermes_before": "42489936cfe8de74fda1e4fc482ac412a02de348",
+        "hermes_after": "40a670996696abd1e5b1975f111b9dd6bacf9914",
+        "openbot": "f91535fb0c8d6fd0a63911ec6e4b67154fd85ebe"
+      },
+      "cases": [
+        {
+          "case": "data_summary",
+          "title": "Deduplicate paid orders",
+          "hermes": true,
+          "openbot": false,
+          "checks": {
+            "hermes": {
+              "summary": true,
+              "paid_rows": true,
+              "input_preserved": true
+            },
+            "openbot": {
+              "summary": false,
+              "paid_rows": false,
+              "input_preserved": true
+            }
+          }
+        },
+        {
+          "case": "config_migration",
+          "title": "Migrate a configuration",
+          "hermes": true,
+          "openbot": true,
+          "checks": {
+            "hermes": {
+              "migrated_json": true,
+              "migration_note": true,
+              "input_preserved": true
+            },
+            "openbot": {
+              "migrated_json": true,
+              "migration_note": true,
+              "input_preserved": true
+            }
+          }
+        },
+        {
+          "case": "code_repair",
+          "title": "Repair code and save tests",
+          "hermes": true,
+          "openbot": true,
+          "checks": {
+            "hermes": {
+              "independent_tests": true,
+              "test_suite_preserved": true,
+              "saved_test_output": true,
+              "test_stdout": "",
+              "test_stderr": "----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+            },
+            "openbot": {
+              "independent_tests": true,
+              "test_suite_preserved": true,
+              "saved_test_output": true,
+              "test_stdout": "",
+              "test_stderr": "----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+            }
+          }
+        },
+        {
+          "case": "transient_recovery",
+          "title": "Recover from a failed command",
+          "hermes": true,
+          "openbot": true,
+          "checks": {
+            "hermes": {
+              "correct_report": true,
+              "exactly_two_attempts": true,
+              "status": true,
+              "helper_preserved": true
+            },
+            "openbot": {
+              "correct_report": true,
+              "exactly_two_attempts": true,
+              "status": true,
+              "helper_preserved": true
+            }
+          }
+        },
+        {
+          "case": "user_correction",
+          "title": "Apply a user correction",
+          "hermes": true,
+          "openbot": true,
+          "checks": {
+            "hermes": {
+              "current_json": true,
+              "change_recorded": true
+            },
+            "openbot": {
+              "current_json": true,
+              "change_recorded": true
+            }
+          }
+        },
+        {
+          "case": "missing_input",
+          "title": "Handle missing input honestly",
+          "hermes": true,
+          "openbot": true,
+          "checks": {
+            "hermes": {
+              "blocker": true,
+              "no_fabrication": true
+            },
+            "openbot": {
+              "blocker": true,
+              "no_fabrication": true
+            }
+          }
+        }
+      ],
+      "totals": {
+        "hermes": {
+          "passed": 6,
+          "tasks": 6
+        },
+        "openbot": {
+          "passed": 5,
+          "tasks": 6
+        }
+      },
+      "data_summary_recheck": {
+        "input": "id,status,cents\na,paid,1250\nb,pending,900\nc,paid,2750\na,paid,1250\n",
+        "expected_summary": {
+          "paid_count": 2,
+          "total_cents": 4000
+        },
+        "expected_csv_rows": [
+          [
+            "id",
+            "cents"
+          ],
+          [
+            "a",
+            "1250"
+          ],
+          [
+            "c",
+            "2750"
+          ]
+        ],
+        "hermes": {
+          "summary": {
+            "paid_count": 2,
+            "total_cents": 4000
+          },
+          "csv_rows": [
+            [
+              "id",
+              "cents"
+            ],
+            [
+              "a",
+              "1250"
+            ],
+            [
+              "c",
+              "2750"
+            ]
+          ],
+          "checks": {
+            "correct_summary": true,
+            "correct_csv_with_header": true,
+            "input_preserved": true
+          },
+          "artifacts": {
+            "summary.json": {
+              "sha256": "3d22098443873873aa5e7e040480c5f159f47eb9137781fb70d2c5dc98ab3d0d",
+              "bytes": 39,
+              "text": "{\"paid_count\": 2, \"total_cents\": 4000}\n"
+            },
+            "paid.csv": {
+              "sha256": "d452540cdc65e297fc63bddd1edfd723ba2236805c5f7f4f8288f519d0e55042",
+              "bytes": 26,
+              "text": "id,cents\r\na,1250\r\nc,2750\r\n"
+            }
+          }
+        },
+        "openbot": {
+          "summary": {
+            "paid_count": 3,
+            "total_cents": 5250
+          },
+          "csv_rows": [
+            [
+              "a",
+              "1250"
+            ],
+            [
+              "c",
+              "2750"
+            ]
+          ],
+          "checks": {
+            "correct_summary": false,
+            "correct_csv_with_header": false,
+            "input_preserved": true
+          },
+          "artifacts": {
+            "summary.json": {
+              "sha256": "49bff3b64da7019f3458dc37a7f621e6672bd692378ace308814f039fdd94056",
+              "bytes": 39,
+              "text": "{\"paid_count\": 3, \"total_cents\": 5250}\n"
+            },
+            "paid.csv": {
+              "sha256": "3522ec352ac9394e2a76c2b7da3ab512df95a1e3077fe4f1586e23bf4b52376f",
+              "bytes": 14,
+              "text": "a,1250\nc,2750\n"
+            }
+          }
+        }
+      },
+      "historical_phases": [
+        {
+          "protocol": "artifact-graded-deepseek-nous-v1",
+          "receipts_sha256": "104c4d8afbbc4da2dbf63b62682273644cec3582203342a26badf4f769927f57",
+          "counts": {
+            "hermes_original": {
+              "passed": 11,
+              "launches": 12
+            },
+            "hermes_updated": {
+              "passed": 10,
+              "launches": 12
+            },
+            "openbot": {
+              "passed": 8,
+              "launches": 12
+            }
+          },
+          "source_revisions": {
+            "hermes_original": "c714c42431e518fcd1c8870eff5c667d5de33b57",
+            "hermes_updated": "b315888da6c36bfb053bddf98cec5a9e0e6f492d",
+            "openbot": "f91535fb0c8d6fd0a63911ec6e4b67154fd85ebe"
+          }
+        },
+        {
+          "protocol": "model-readback-followup-v1",
+          "receipts_sha256": "2af14b9a16f25616162e1053b52f808a67705c33d0f609cc511c5cbb322ec912",
+          "counts": {
+            "hermes_after": {
+              "passed": 10,
+              "launches": 12
+            },
+            "openbot": {
+              "passed": 2,
+              "launches": 2
+            },
+            "hermes_before": {
+              "passed": 1,
+              "launches": 2
+            }
+          },
+          "source_revisions": {
+            "hermes_before": "5bdbd90f3f55cd53c37a6645ae2064cc95f6d034",
+            "hermes_after": "42489936cfe8de74fda1e4fc482ac412a02de348",
+            "openbot": "f91535fb0c8d6fd0a63911ec6e4b67154fd85ebe"
+          }
+        },
+        {
+          "protocol": "model-terminal-explicit-schema-v1",
+          "receipts_sha256": "b6d2bf2318d6852b0087e3af06b7b999fc97e7eba3636dda3d3a8edd65fa3cf2",
+          "counts": {
+            "hermes_after": {
+              "passed": 6,
+              "launches": 6
+            },
+            "openbot": {
+              "passed": 5,
+              "launches": 6
+            },
+            "hermes_before": {
+              "passed": 0,
+              "launches": 1
+            }
+          },
+          "source_revisions": {
+            "hermes_before": "42489936cfe8de74fda1e4fc482ac412a02de348",
+            "hermes_after": "40a670996696abd1e5b1975f111b9dd6bacf9914",
+            "openbot": "f91535fb0c8d6fd0a63911ec6e4b67154fd85ebe"
+          }
+        }
+      ],
+      "limits": [
+        "One fresh run per task and system in the latest sample; six authored, unblinded tasks.",
+        "Different native system prompts and toolsets; same requested provider/model and task controls.",
+        "OpenBot used its unchanged real AgentService/PiAgentClient/Pi backend; desktop and browser ports were unavailable and unused by these tasks.",
+        "The common transport buffered upstream replies; replay timing and raw turn duration are not a speed ranking.",
+        "Hermes recovery encountered one JSONDecodeError from the transport and ultimately passed. The upstream status and body for that error were not captured.",
+        "Earlier model phases include failures for both products. Two earlier correction prompts had a flat-schema grading ambiguity; the latest prompt explicitly specified that shape for both systems.",
+        "Two current native Windows file-read/dedup tests remain failing. GUI, full agent teams, long-running reliability and broad reasoning superiority are unproven."
+      ],
+      "source_evidence_sha256": "5e2addd846b9ca12838d53b26539d66425ffd5966ca1f9855728a0607895a270"
+    },
+    "native_desktop": {
+      "source_protocol": "native-desktop-config-demo-v2",
+      "hermes": {
+        "artifact_checks_passed": 3,
+        "artifact_checks_total": 3,
+        "inverse_migration_restores_original": true,
+        "identified_note_errors": [
+          {
+            "claim": "The migration is not reversible without losing the original key name",
+            "finding": "Incorrect for this specified rename: inverse key rename and version 1 restore the exact original JSON object.",
+            "counterexample_restores_original": true
+          }
+        ],
+        "note_bytes": 1390,
+        "review_method": "Unblinded manual review after the run, with a programmatically checked counterexample. No claim of exhaustive factual verification."
+      },
+      "openbot": {
+        "artifact_checks_passed": 3,
+        "artifact_checks_total": 3,
+        "inverse_migration_restores_original": true,
+        "identified_note_errors": [],
+        "note_bytes": 734,
+        "review_method": "Unblinded manual review after the run, with a programmatically checked counterexample. No claim of exhaustive factual verification."
+      },
+      "outcome": "Equal artifact correctness; Hermes has one identified extra documentation error. A Hermes quality win is not established by this desktop task.",
+      "provider_controls_matched": false,
+      "evidence_file": "hermes-openbot-native-demo-evidence.json"
+    },
+    "other_dimensions": {
+      "speed_and_cost": "The native routes and controls differ; no matched comparison is available.",
+      "autonomous_model_recovery": "Not established: OpenBot's model switch was manual after user authorization.",
+      "platforms": [
+        {
+          "name": "Linux",
+          "passed": 309,
+          "failed": 0,
+          "skipped": 4
+        },
+        {
+          "name": "macOS",
+          "passed": 299,
+          "failed": 0,
+          "skipped": 14
+        },
+        {
+          "name": "Windows",
+          "passed": 293,
+          "failed": 2,
+          "skipped": 18
+        }
+      ],
+      "long_running_bot_quality": "Not established by these short local tasks.",
+      "source_search_results": [
+        {
+          "catalog_size": 32,
+          "hermes_p50": 0.079166,
+          "hermes_p95": 0.170959,
+          "openbot_p50": 0.047083,
+          "openbot_p95": 0.060666
+        },
+        {
+          "catalog_size": 256,
+          "hermes_p50": 0.374167,
+          "hermes_p95": 0.401292,
+          "openbot_p50": 0.3000835,
+          "openbot_p95": 0.397666
+        },
+        {
+          "catalog_size": 1024,
+          "hermes_p50": 1.5623125,
+          "hermes_p95": 2.917917,
+          "openbot_p50": 1.2162085,
+          "openbot_p95": 1.510625
+        }
+      ],
+      "source_search_scope": "Earlier component test: Hermes 70a43eee vs OpenBot f91535fb. Warm tool search only; unequal native catalogs were excluded from startup ranking."
+    },
+    "conclusion": "Hermes showed an artifact-quality advantage on one data-processing task in the latest six-task backend sample, with five ties. The native desktop migration has no Hermes quality advantage. These findings do not establish general quality superiority.",
+    "selection_policy": "Show all six paired latest backend tasks, all stored earlier phase counts, the before-control failure, and the native note error. No blended score across versions, protocols, or samples."
+  }
+}

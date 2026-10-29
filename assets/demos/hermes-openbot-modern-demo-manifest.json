@@ -1,0 +1,53 @@
+{
+  "title": "Hermes \u00d7 OpenBot \u2014 modern evidence edit",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "planned_duration_seconds": 39.6,
+  "presentation": "Silent editorial walkthrough of genuine native screenshots, with clearly separate report graphics. Not continuous screen footage. Display durations are editorial.",
+  "changes": [
+    "16:9 Full HD",
+    "larger typography",
+    "modern editorial cards",
+    "subtle camera motion",
+    "smooth crossfades",
+    "equal seven-second bot result spotlights"
+  ],
+  "screenshot_operations": "Original captures cropped/resized for framing; no generated or redrawn app interfaces.",
+  "spotlight_crop_source_pixels": {
+    "hermes": [
+      560,
+      470,
+      2480,
+      1410
+    ],
+    "openbot": [
+      675,
+      930,
+      2350,
+      1430
+    ]
+  },
+  "native_capture_manifest": "hermes-openbot-native-capture-manifest.json",
+  "evidence_files": [
+    "hermes-openbot-native-demo-evidence.json",
+    "hermes-openbot-quality-evidence.json"
+  ],
+  "scene_duration_seconds": [
+    4,
+    6,
+    7,
+    7,
+    8,
+    6,
+    4
+  ],
+  "crossfade_seconds": 0.4,
+  "source_hashes": {
+    "hermes-openbot-native-demo-evidence.json": "a4eb788a3dee1199ad63774ff8c8ff35b3cf6eae50a1256841fb91ad08b65510",
+    "hermes-openbot-quality-evidence.json": "69a47bfdb26310a6251cb43af2042ef20b14d389f41acb5d4ec4ec21470660d1"
+  },
+  "video_sha256": "bb801b73398eaf5ccbe2ec9ad6f55329f2205cb1514ece3679829b270560f8cf",
+  "facts_changed": false,
+  "new_model_calls": 0
+}
