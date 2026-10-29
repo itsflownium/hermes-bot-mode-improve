@@ -32,7 +32,11 @@ def completion_nudge(agent) -> str | None:
     limit = min(3, max(0, value)) if type(value) is int else 0
     used = getattr(agent, "_todo_completion_nudges", 0)
     remaining = _remaining(agent)
-    if not remaining or type(used) is not int or used >= limit:
+    if not remaining:
+        from agent.task_completion_bot_mode import artifact_completion_nudge
+
+        return artifact_completion_nudge(agent)
+    if type(used) is not int or used >= limit:
         return None
     agent._todo_completion_nudges = used + 1
     lines = [

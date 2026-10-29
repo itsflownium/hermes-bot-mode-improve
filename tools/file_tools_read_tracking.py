@@ -247,17 +247,21 @@ def _update_read_timestamp(filepath: str, task_id: str) -> None:
 
 
 def _file_metadata(resolved: str) -> tuple | None:
+    from hermes_platform.file_stamps import file_metadata
+
     try:
-        st = os.stat(resolved)
-        return st.st_dev, st.st_ino, st.st_size, st.st_mtime_ns, st.st_ctime_ns
+        return file_metadata(os.stat(resolved))
     except OSError:
         return None
 
 
 def _file_version(resolved: str) -> tuple | None:
     """A byte snapshot, not just mtime (editors/copy tools can preserve that)."""
+    from hermes_platform.file_stamps import file_metadata, stable_open_file
+
     try:
-        if not stat.S_ISREG(os.stat(resolved).st_mode):
+        path_before = os.stat(resolved)
+        if not stat.S_ISREG(path_before.st_mode):
             return None
         fd = os.open(resolved, os.O_RDONLY | getattr(os, "O_NONBLOCK", 0) | getattr(os, "O_BINARY", 0))
         with os.fdopen(fd, "rb") as stream:
@@ -265,11 +269,10 @@ def _file_version(resolved: str) -> tuple | None:
             if not stat.S_ISREG(before.st_mode):
                 return None
             digest = hashlib.file_digest(stream, "sha256").digest()
+            closed = os.fstat(stream.fileno())
             after = os.stat(resolved)
-        fields = ("st_dev", "st_ino", "st_size", "st_mtime_ns", "st_ctime_ns")
-        version = tuple(getattr(before, name) for name in fields)
-        if version == tuple(getattr(after, name) for name in fields):
-            return (*version, digest)
+        if stable_open_file(path_before, before, closed, after):
+            return (*file_metadata(path_before), digest)
         return None
     except OSError:
         return None

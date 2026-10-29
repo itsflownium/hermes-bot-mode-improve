@@ -88,14 +88,18 @@ Remote-creation notes:
 ## Completion review
 
 After a managed Bot Chat changes files through the native file tools or completes
-a terminal command without writing a checklist, Hermes gives it one completion-review reminder before the
+a terminal command, Hermes gives it one completion-review reminder before the
 final response. The Bot compares the original request with its tool results,
-finishes missing authorized deliverables, or explains a blocker. Existing
-checklist completion checks handle turns that maintain `todo_list`.
+finishes missing authorized deliverables, or explains a blocker. Unfinished
+checklists keep their existing bounded reminders; a completed checklist does not
+replace the review of actual outputs.
 
-The reminder includes short excerpts of current local outputs, using the same
+The reminder includes bounded head/tail excerpts from up to six current local outputs, using the same
 read guards and redaction as an explicit file read. It asks the Bot to compare
-actual contents with the requested structure and values. Excerpts are bounded
+actual contents with the requested structure and values, check cross-file
+consistency, and correct or qualify unsupported claims in supporting documents
+and the proposed answer. The readback reports how many changed files were omitted.
+Excerpts are bounded
 and may be incomplete; remote files and document extraction need explicit reads.
 They add some context tokens and do not grant permission to overwrite a file that
 the Bot has not fully read. Numbered file previews also label their display-only

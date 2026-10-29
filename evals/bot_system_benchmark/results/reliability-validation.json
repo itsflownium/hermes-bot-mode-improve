@@ -1,0 +1,199 @@
+{
+  "protocol": "native-bot-reliability-follow-up-v1",
+  "runtime_revision": "96a9276df8b9b1f148624fea7a88b6d14f7fe2be",
+  "source_import": "6ea5c928b018a5d2999511fba107ed2238743929",
+  "imported_source_tree_equivalent_to": "40a670996696abd1e5b1975f111b9dd6bacf9914",
+  "test_manifest_sha256": "2ac940d1eea6f975f976c5dd8eaa13f1e822ef9862d536676e67e86e82dea7bc",
+  "native_run_url": "https://github.com/itsflownium/hermes-bot-mode-improve/actions/runs/40810618172",
+  "native_workflow_conclusion": "success",
+  "file_retries": 0,
+  "selected_files": 43,
+  "results": {
+    "ubuntu-latest": {
+      "passed": 598,
+      "failed": 0,
+      "skipped": 9
+    },
+    "macos-15": {
+      "passed": 587,
+      "failed": 0,
+      "skipped": 20
+    },
+    "windows-latest": {
+      "passed": 582,
+      "failed": 0,
+      "skipped": 25
+    },
+    "local_macos": {
+      "passed": 587,
+      "failed": 0,
+      "skipped": 20
+    }
+  },
+  "windows_focused_repetitions": [
+    {
+      "repetition": 1,
+      "passed": 19,
+      "failed": 0,
+      "skipped": 2
+    },
+    {
+      "repetition": 2,
+      "passed": 19,
+      "failed": 0,
+      "skipped": 2
+    },
+    {
+      "repetition": 3,
+      "passed": 19,
+      "failed": 0,
+      "skipped": 2
+    }
+  ],
+  "windows_focused_selection": "4 files; -k Dedup or alias or snapshot_remains or settled_live_wait or receipt_publication",
+  "local_blocking_source_checks": {
+    "passed": 13,
+    "failed": 0,
+    "code_health_python_files": 23,
+    "note": "Separate local source checks, not 13 GitHub check runs."
+  },
+  "limits": [
+    "Focused contracts; not full-suite certification or a model-quality score.",
+    "Publication-only commits add documentation, demo assets and receipts after this tested runtime revision.",
+    "The separate two-case model sample completed baseline 2/2 and candidate 1/2; no general ranking follows."
+  ],
+  "archived_receipts": {
+    "answer-review-before.log.gz": {
+      "uncompressed_sha256": "6e14dcd458d774a7a4fd576926ee06c75ea0dfeb3fc86892f527ee12212f124c",
+      "compressed_bytes": 4310
+    },
+    "backend-setup-and-validation.json.gz": {
+      "uncompressed_sha256": "93156c1832642fbcfa8d33c8ca6427ee3d41ef5a6ca253184b68ce47877ba7fa",
+      "compressed_bytes": 32258
+    },
+    "bot-mode-cycle.json.gz": {
+      "uncompressed_sha256": "8f108897dcb9668d072ae742736a097fc822d8a5d3e61ad52d01f300807f500d",
+      "compressed_bytes": 133466
+    },
+    "bot-platforms.json.gz": {
+      "uncompressed_sha256": "fb33feaf3f5cc527e4b07c8101bbb60c75dd22dd6e3f33df66c49c44d399d1de",
+      "compressed_bytes": 12392
+    },
+    "bot-reply-settlement.json.gz": {
+      "uncompressed_sha256": "a660ff4a97228571c52d7991d1e5d73c0ac3d8e838d7d72c75bbccc7b48c1d0a",
+      "compressed_bytes": 1397
+    },
+    "empty-selection-before.log.gz": {
+      "uncompressed_sha256": "906ee0cbe87e635a8c84a15ab374057b05d4cfb243e2b5ec7fdf2bb5788eab25",
+      "compressed_bytes": 1733
+    },
+    "final.json.gz": {
+      "uncompressed_sha256": "4a45b25fc59be352bbb3a2b6245b348850d61dbb53ca0096d08e76d3c5c0f405",
+      "compressed_bytes": 116965
+    },
+    "hermes-original-cycle.json.gz": {
+      "uncompressed_sha256": "8c3e8dced2952d99c324456c766c5b52a0e9a7a39756839d2e8769e2f0fad8f1",
+      "compressed_bytes": 7933
+    },
+    "line-ending-before.log.gz": {
+      "uncompressed_sha256": "e8e488dc0d29844945a7612b708982e2ac34218085c3b5ac62596c45d8e48c18",
+      "compressed_bytes": 1645
+    },
+    "local-macos-96a9276d.log.gz": {
+      "uncompressed_sha256": "496c3cf9e63ebd2be27637e8934c5fe10711ef6aa18783fec5390173b279c8e8",
+      "compressed_bytes": 1984
+    },
+    "model-tasks-initial.json.gz": {
+      "uncompressed_sha256": "e369347ccc1c66c032b7abd020b67b9f3d91ecafb0354fdc3dda51d704163ad8",
+      "compressed_bytes": 247515
+    },
+    "model-tasks-readback.json.gz": {
+      "uncompressed_sha256": "4ebe114ff9027c09ae8edda6c88a36f9746950745a62cb850525c0d763339c58",
+      "compressed_bytes": 157796
+    },
+    "model-tasks-terminal.json.gz": {
+      "uncompressed_sha256": "ccee6ff818e8d222eba0841456eb56908052aea4affb3caa84010ab71b4cd813",
+      "compressed_bytes": 145343
+    },
+    "native-artifact-baseline.json.gz": {
+      "uncompressed_sha256": "155659d14a9acdd69f63a3bd248db8a533e20814b626789e65718a7011ec6daa",
+      "compressed_bytes": 120903
+    },
+    "native-linux-96a9276d.log.gz": {
+      "uncompressed_sha256": "5b17b96f243e858005b0783b38f7e9a3d3d97547b682de4c3e7347bce7f9a514",
+      "compressed_bytes": 12863
+    },
+    "native-linux-96fdd6e2.log.gz": {
+      "uncompressed_sha256": "37e14912ffccc7718999f0c17ae3c79d9ec17c0846ede84212c46332ae942270",
+      "compressed_bytes": 12547
+    },
+    "native-macos-96a9276d.log.gz": {
+      "uncompressed_sha256": "757fbe270e4ae382eba9698614b10afcfad01b6c8e30da1339af4c6c997054e0",
+      "compressed_bytes": 12866
+    },
+    "native-macos-96fdd6e2.log.gz": {
+      "uncompressed_sha256": "2afe8a2bab0829056eee5ba726540b4aa6fe33079b72a7843f961043b457a8c3",
+      "compressed_bytes": 12467
+    },
+    "native-windows-96a9276d.log.gz": {
+      "uncompressed_sha256": "f0f3328da5c66069be1ec9ef06cf487974c9faaa4fa8f5d07af842e902acf5f2",
+      "compressed_bytes": 14900
+    },
+    "native-windows-96fdd6e2.log.gz": {
+      "uncompressed_sha256": "81327cf5fb2cf11dbb4c186afec0312e1cddaa9c32c5e33bdbe4663bf56c21c2",
+      "compressed_bytes": 20786
+    },
+    "openbot-native-backend.json.gz": {
+      "uncompressed_sha256": "c52ebe71e53e4f3ed503768a300ab1da44cab21dff82e297a6599e24e25280dc",
+      "compressed_bytes": 5689
+    },
+    "portal-memory-smoke.json.gz": {
+      "uncompressed_sha256": "1d755cbfdd659635f09651a3d7ee006a65b4060e2efd44b2c0c4c829b7e6b1ae",
+      "compressed_bytes": 3066
+    },
+    "public-mcp-final.json.gz": {
+      "uncompressed_sha256": "15868d33312f1ca6fe263dc304ea4613d8394722f738df1d9a5595d7825b795d",
+      "compressed_bytes": 2546
+    },
+    "public-mcp-initial-verified.json.gz": {
+      "uncompressed_sha256": "dc47bab73cea7d1fe67db803f3191fbae1d0fb1b53b0d103db61c8cf1132fb3b",
+      "compressed_bytes": 2253
+    },
+    "public-mcp-setup-diagnostic.json.gz": {
+      "uncompressed_sha256": "ac569e95b4c51975e11649148237287e9311c503e3c362e3473f2f8fd018e15e",
+      "compressed_bytes": 1617
+    },
+    "quality-before-after.json.gz": {
+      "uncompressed_sha256": "f7010d56ca298b4d85e03c871f4f56332bbad226015ba58bcc0f51c91222a401",
+      "compressed_bytes": 45491
+    },
+    "receipt-publication-before.log.gz": {
+      "uncompressed_sha256": "be40202ab234f97aea5aea52aacc61aa23a3350ce1f3cc48b2d8ac8eeb6ca876",
+      "compressed_bytes": 2665
+    },
+    "search-optimized.json.gz": {
+      "uncompressed_sha256": "1a28bf8f81861d79d84b1df4e393b215508e3adde9e3209e37d561e3877ae666",
+      "compressed_bytes": 117734
+    },
+    "setup-diagnostic.json.gz": {
+      "uncompressed_sha256": "07e0c770865243e8add4240dcafb1a78cd16e73e58e6d0a440b7d1e721842501",
+      "compressed_bytes": 77666
+    },
+    "source-checks-96a9276d.log.gz": {
+      "uncompressed_sha256": "b8731ab51848cc7f1ac17021dcb45eed1f0f92cb198e0ae47df0615e6a01a4b6",
+      "compressed_bytes": 123
+    },
+    "task-recovery.json.gz": {
+      "uncompressed_sha256": "de5ebce49704363e5516098413da44932ff78c616b2f7d16ce83a4ab20098ed4",
+      "compressed_bytes": 2038
+    },
+    "windows-alias-before.log.gz": {
+      "uncompressed_sha256": "094f6cec0cfd7470cb8bf7d52933b1e9bb4403f20ac66706fd0250b6f18e2855",
+      "compressed_bytes": 5067
+    },
+    "windows-intermediate-failure.log.gz": {
+      "uncompressed_sha256": "816482a9cc287a0eae0eb99df3198b21501e90d53aac3a080546bc0e6e2db17d",
+      "compressed_bytes": 27246
+    }
+  }
+}

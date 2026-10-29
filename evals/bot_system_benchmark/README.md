@@ -115,6 +115,11 @@ must not be inferred from this offline component benchmark.
 
 Completion/recovery changes also have a separate [fixed fault-contract protocol and receipts](TASK_RECOVERY.md). These real-agent/local-transport probes use scripted responses and provide no overall OpenBot task score.
 
+The audit follow-up is documented in [Windows reliability and answer review](RELIABILITY_UPDATE.md).
+It retains the final-source Windows failures, adds native alias regressions,
+and distinguishes local source checks from GitHub CI. The separate
+[quality protocol](QUALITY_TASKS.md) keeps all earlier acceptance rules intact.
+
 The expanded [OpenBot native-backend comparison](OPENBOT_BACKEND.md) additionally
 runs upstream-authored service/provider recovery tests, the actual pinned Pi
 runtime on matched artifact cases, original Hermes and the Bot Chat completion

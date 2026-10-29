@@ -3,6 +3,9 @@
 </p>
 
 # Hermes Agent ☤
+
+[Bot Mode improvements, validation results and the modern demo](BOT_MODE_IMPROVEMENTS.md)
+
 <p align="center">
   <a href="https://hermes-agent.nousresearch.com/">Hermes Agent</a> | <a href="https://hermes-agent.nousresearch.com/">Hermes Desktop</a>
 </p>

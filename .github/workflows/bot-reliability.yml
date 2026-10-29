@@ -1,0 +1,73 @@
+name: Bot reliability and answer accuracy
+
+on:
+  push:
+    branches: [main, 'fix/**']
+    paths:
+      - '.github/workflows/bot-reliability.yml'
+      - 'agent/**'
+      - 'tools/**'
+      - 'hermes_platform/**'
+      - 'tests/**'
+      - 'scripts/run_tests*'
+      - 'evals/bot_system_benchmark/reliability-test-files.txt'
+      - 'evals/bot_system_benchmark/*.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bot-reliability-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native-contracts:
+    name: Native contracts (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-15, windows-latest]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-pm
+        with:
+          extras: '["all", "anthropic"]'
+          test-environment: 'true'
+          save-tools-cache: 'false'
+          save-python-cache: 'false'
+      - name: Inspect native file identity
+        shell: bash
+        run: |
+          "$HERMES_PYTHON" -m evals.bot_system_benchmark.native_file_probe
+      - name: Run fixed reliability selection
+        shell: bash
+        env:
+          HERMES_TEST_FILE_RETRIES: '0'
+          HERMES_TEST_WORKERS: '2'
+        run: |
+          set -o pipefail
+          scripts/run_tests.sh --files-from evals/bot_system_benchmark/reliability-test-files.txt -q 2>&1 | tee bot-reliability.log
+      - name: Check Windows read and receipt repeatability without retries
+        if: always() && runner.os == 'Windows'
+        shell: bash
+        env:
+          HERMES_TEST_FILE_RETRIES: '0'
+          HERMES_TEST_WORKERS: '2'
+        run: |
+          set -uo pipefail
+          failed=0
+          for repetition in 1 2 3; do
+            scripts/run_tests.sh tests/tools/test_file_read_guards.py tests/tools/test_windows_file_identity.py tests/tools/test_bot_mode_dm.py tests/tools/test_bot_receipt_publication.py -k 'Dedup or alias or snapshot_remains or settled_live_wait or receipt_publication' -q 2>&1 | tee "bot-read-$repetition.log" || failed=1
+          done
+          exit "$failed"
+      - name: Preserve native output
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: native-contracts-${{ matrix.os }}
+          path: |
+            bot-reliability.log
+            bot-read-*.log

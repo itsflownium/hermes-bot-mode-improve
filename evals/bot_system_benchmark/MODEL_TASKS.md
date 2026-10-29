@@ -103,6 +103,13 @@ before-Hermes recovery control. The before source is `42489936`; shuffle seed is
 20261029. Both products retain the same 16-request per-launch cap, model/settings
 and 150-second per-turn limit. Keep all earlier rows and the oracle ambiguity.
 
+The completed terminal phase is now published in
+[the complete terminal receipts](results/model-tasks-terminal.json.gz).
+Uncompressed SHA-256: `ccee6ff818e8d222eba0841456eb56908052aea4affb3caa84010ab71b4cd813`.
+All 13 launches remain: current Hermes 6/6, OpenBot 5/6, and the separate
+before-Hermes recovery control 0/1. One transport-error request is retained.
+This is the historical authored sample, not a new desktop or quality evaluation.
+
 The product change covers tasks performed entirely through completed terminal
 commands. Their known exit codes can enable the same one-per-turn Bot Chat review;
 successful exit alone does not verify requested output files. Other task IDs cannot

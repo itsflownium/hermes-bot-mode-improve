@@ -253,15 +253,15 @@ def _select_files(
     """Return ``(files, discovery roots)`` for this run, passthrough ignores applied."""
     # --files / --files-from: explicit file list (argv or file-backed) from
     # the CI generate job — skip discovery.
-    if args.files and args.files_from:
+    if args.files is not None and args.files_from is not None:
         print(
             "error: --files and --files-from are mutually exclusive", file=sys.stderr
         )
         sys.exit(2)
     roots: list[Path] = []
-    if args.files:
+    if args.files is not None:
         files = [repo_root / f for f in _split_pathspec(args.files)]
-    elif args.files_from:
+    elif args.files_from is not None:
         files = [repo_root / f for f in _read_files_from(args.files_from)]
     else:
         # Resolve discovery roots: positional path args override --paths if any
