@@ -455,9 +455,9 @@ _POLL_SECONDS = 0.5
 
 def _poll_receipt(profile_home: Path | str, delivery_id: str) -> dict[str, Any] | None:
     """A waiter's read: the receipt file the owner republishes when the admission settles (and on
-    restart recovery). Never an authority RPC: a wait outlives owner restarts, and replaying the
-    envelope (``read_delivery_result``) is for producers re-confirming their admission."""
-    record = _read(_root(profile_home) / f"{_delivery_id(delivery_id)}.json")
+    restart recovery). Use the writer's short publication lock, including for Windows in-place
+    rewrite fallbacks. Never an authority RPC: a wait outlives owner restarts."""
+    record = read_delivery_result(profile_home, delivery_id)
     if record is not None and record.get("status") == "canonical":
         # Admitted with its outcome not yet published (an older owner's last write): pending.
         return {**record, "status": "queued"}

@@ -31,3 +31,13 @@ tests/evals/test_quality_task_oracles.py
 tests/evals/test_model_transport.py
 tests/hermes_platform/test_file_stamps.py
 tests/agent/test_verification_snapshot.py
+tests/tools/test_patch_line_endings.py
+tests/tools/test_fuzzy_match.py
+tests/tools/test_patch_parser.py
+tests/tools/test_patch_already_applied.py
+tests/tools/test_patch_multimatch_locations.py
+tests/tools/test_escape_drift_autocorrect.py
+tests/tools/test_write_approval.py
+tests/tools/test_bot_receipt_publication.py
+tests/tools/test_bot_live_owner_delivery.py
+tests/tools/test_bot_live_delivery_windows_acl.py

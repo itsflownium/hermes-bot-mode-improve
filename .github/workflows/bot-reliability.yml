@@ -7,6 +7,7 @@ on:
       - '.github/workflows/bot-reliability.yml'
       - 'agent/**'
       - 'tools/**'
+      - 'hermes_platform/**'
       - 'tests/**'
       - 'scripts/run_tests*'
       - 'evals/bot_system_benchmark/reliability-test-files.txt'
@@ -49,7 +50,7 @@ jobs:
         run: |
           set -o pipefail
           scripts/run_tests.sh --files-from evals/bot_system_benchmark/reliability-test-files.txt -q 2>&1 | tee bot-reliability.log
-      - name: Check Windows read repeatability without retries
+      - name: Check Windows read and receipt repeatability without retries
         if: always() && runner.os == 'Windows'
         shell: bash
         env:
@@ -59,7 +60,7 @@ jobs:
           set -uo pipefail
           failed=0
           for repetition in 1 2 3; do
-            scripts/run_tests.sh tests/tools/test_file_read_guards.py tests/tools/test_windows_file_identity.py tests/tools/test_known_file_write_baseline.py -q 2>&1 | tee "bot-read-$repetition.log" || failed=1
+            scripts/run_tests.sh tests/tools/test_file_read_guards.py tests/tools/test_windows_file_identity.py tests/tools/test_bot_mode_dm.py tests/tools/test_bot_receipt_publication.py -k 'Dedup or alias or snapshot_remains or settled_live_wait or receipt_publication' -q 2>&1 | tee "bot-read-$repetition.log" || failed=1
           done
           exit "$failed"
       - name: Preserve native output

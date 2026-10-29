@@ -179,6 +179,18 @@ def _strategy_exact(content: str, pattern: str) -> list[Span]:
     return [m.span() for m in re.finditer(re.escape(pattern), content)]
 
 
+def _strategy_line_endings(content: str, pattern: str) -> list[Span]:
+    """Exact text with LF/CRLF-equivalent separators, using original text offsets.
+
+    A trailing LF anchor must not fall through to similarity matching and select
+    a neighboring line merely because the file uses CRLF.
+    """
+    if "\n" not in pattern:
+        return []
+    expression = r"\r?\n".join(re.escape(part) for part in pattern.replace("\r\n", "\n").split("\n"))
+    return [match.span() for match in re.finditer(expression, content)]
+
+
 def _strategy_line_trimmed(content: str, pattern: str) -> list[Span]:
     """Strategy 2: strip each line before comparing."""
     return _match_transformed_lines(content, pattern, lambda ls: [l.strip() for l in ls])
@@ -288,6 +300,7 @@ def _strategy_context_aware(content: str, pattern: str) -> list[Span]:
 # Ordered chain: precise strategies first, similarity-based last.
 STRATEGIES: list[tuple[str, Callable[[str, str], list[Span]]]] = [
     ("exact", _strategy_exact),
+    ("line_endings", _strategy_line_endings),
     ("line_trimmed", _strategy_line_trimmed),
     ("whitespace_normalized", _strategy_whitespace_normalized),
     ("indentation_flexible", _strategy_indentation_flexible),
@@ -421,7 +434,8 @@ def fuzzy_find_and_replace(content: str, old_string: str, new_string: str,
         effective_new = _maybe_unescape_new_string(new_string, content, matches)
         new_content = _apply_replacements(
             content, matches, effective_new,
-            old_string=old_string if strategy_name != "exact" else None,
+            old_string=old_string if strategy_name not in {"exact", "line_endings"} else None,
+            match_line_endings=strategy_name == "line_endings",
             unicode_plan=(_unicode_edit_plan(old_string, effective_new)
                           if strategy_name == "unicode_normalized" else None))
         _note_edit_match(strategy_name)
@@ -636,13 +650,17 @@ def _preserve_unicode_in_replacement(file_region: str, new_string: str,
 
 def _apply_replacements(content: str, matches: list[Span],
                         new_string: str, old_string: Optional[str] = None,
-                        unicode_plan: Optional[tuple[str, list]] = None) -> str:
+                        unicode_plan: Optional[tuple[str, list]] = None,
+                        match_line_endings: bool = False) -> str:
     """Splice ``new_string`` over each span (end-to-start so offsets stay valid);
     ``old_string`` non-None (non-exact match) re-indents it per region, and
     ``unicode_plan`` (unicode_normalized match) keeps each region's typography."""
     result = content
     for start, end in sorted(matches, key=lambda x: x[0], reverse=True):
         adjusted = new_string
+        if match_line_endings:
+            ending = re.search(r"\r?\n", content[start:end]).group()
+            adjusted = adjusted.replace("\r\n", "\n").replace("\n", ending)
         if old_string is not None:
             region = content[start:end]
             if unicode_plan is not None:
