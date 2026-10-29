@@ -28,7 +28,7 @@ else:
 
 
 def git(source: Path, *args: str) -> str:
-    return subprocess.check_output(["git", "-C", str(source), *args], text=True).strip()
+    return subprocess.check_output(["git", "-C", str(source), *args], text=True, timeout=30).strip()
 
 
 def worker(args) -> None:
