@@ -2,7 +2,15 @@ name: Bot reliability and answer accuracy
 
 on:
   push:
-    branches: [fix/windows-answer-accuracy]
+    branches: [main, 'fix/**']
+    paths:
+      - '.github/workflows/bot-reliability.yml'
+      - 'agent/**'
+      - 'tools/**'
+      - 'tests/**'
+      - 'scripts/run_tests*'
+      - 'evals/bot_system_benchmark/reliability-test-files.txt'
+      - 'evals/bot_system_benchmark/*.py'
   workflow_dispatch:
 
 permissions:
@@ -20,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest]
+        os: [ubuntu-latest, macos-15, windows-latest]
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: ./.github/actions/setup-pm
@@ -33,14 +41,14 @@ jobs:
         shell: bash
         run: |
           "$HERMES_PYTHON" -c 'import os,tempfile,pathlib,json; from tools.file_tools_read_tracking import _file_version,_file_metadata; fields=("st_dev","st_ino","st_size","st_mtime_ns","st_ctime_ns"); d=tempfile.TemporaryDirectory(); p=pathlib.Path(d.name)/"probe.txt"; p.write_bytes(b"probe\n"); f=p.open("rb"); print(json.dumps({"path_stat":{k:getattr(p.stat(),k) for k in fields},"descriptor_stat":{k:getattr(os.fstat(f.fileno()),k) for k in fields},"version_available":_file_version(str(p)) is not None})); f.close(); d.cleanup()'
-      - name: Run native read contracts
+      - name: Run fixed reliability selection
         shell: bash
         env:
           HERMES_TEST_FILE_RETRIES: '0'
           HERMES_TEST_WORKERS: '2'
         run: |
           set -o pipefail
-          scripts/run_tests.sh tests/tools/test_file_read_guards.py tests/tools/test_file_tools.py tests/tools/test_windows_file_identity.py -q 2>&1 | tee bot-reliability.log
+          scripts/run_tests.sh --files-from evals/bot_system_benchmark/reliability-test-files.txt -q 2>&1 | tee bot-reliability.log
       - name: Preserve native output
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

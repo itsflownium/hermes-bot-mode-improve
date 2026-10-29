@@ -59,6 +59,7 @@ class PortalProxy(AbstractContextManager):
         allow_local=False,
         reservation_ceiling="4.50",
         request_limit=400,
+        authorized_cap="5.00",
     ):
         base = credentials["base_url"].rstrip("/")
         parsed = urlparse(base)
@@ -80,19 +81,22 @@ class PortalProxy(AbstractContextManager):
         )
         self.ledger_path = ledger_path
         self.reservation_ceiling = Decimal(reservation_ceiling)
+        self.authorized_cap = Decimal(authorized_cap)
         self.request_limit = request_limit
         if (
-            not 0 < self.reservation_ceiling <= Decimal("5.00")
+            not self.authorized_cap.is_finite()
+            or not self.reservation_ceiling.is_finite()
+            or not 0 < self.reservation_ceiling <= self.authorized_cap
             or not 0 < request_limit <= 500
         ):
             raise ValueError(
-                "Evaluation guard exceeds the user's $5 authority or request limit"
+                "Evaluation guard exceeds the user's declared authority or request limit"
             )
         self.lock = threading.Lock()
         self.label = "unassigned"
         self.ledger = {
             "model": MODEL,
-            "authorized_cap_usd": "5.00",
+            "authorized_cap_usd": str(self.authorized_cap),
             "reservation_ceiling_usd": "4.50",
             "reservation_safety_factor": 2,
             "pricing": pricing,
@@ -104,7 +108,7 @@ class PortalProxy(AbstractContextManager):
             self.ledger = json.loads(ledger_path.read_text())
             if (
                 self.ledger.get("model") != MODEL
-                or self.ledger.get("authorized_cap_usd") != "5.00"
+                or Decimal(self.ledger.get("authorized_cap_usd", "0")) != self.authorized_cap
             ):
                 raise ValueError("Existing budget ledger has incompatible authority")
         if (
@@ -116,7 +120,7 @@ class PortalProxy(AbstractContextManager):
                     "previous_ceiling_usd": self.ledger.get("reservation_ceiling_usd"),
                     "ceiling_usd": str(self.reservation_ceiling),
                     "request_limit": self.request_limit,
-                    "note": "Predeclared protocol extension under the same $5 authority; no reservations refunded.",
+                    "note": "Predeclared protocol extension under the same declared authority; no reservations refunded.",
                 }
             )
         self.ledger.update(

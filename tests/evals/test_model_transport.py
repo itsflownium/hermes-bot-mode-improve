@@ -37,6 +37,21 @@ def test_exhausted_shared_ledger_never_reaches_the_provider(tmp_path):
         assert upstream.requests == []
 
 
+def test_declared_extension_retains_reservations_and_cannot_silently_change_authority(tmp_path):
+    credentials = {"base_url": "http://127.0.0.1:9/v1", "api_key": "fixture-local-only"}
+    pricing = {"prompt": "0.0000001", "completion": "0.0000005"}
+    ledger = tmp_path / "ledger.json"
+    with PortalProxy(credentials, pricing, ledger, allow_local=True, authorized_cap="6.00", reservation_ceiling="6.00") as proxy:
+        proxy.ledger["reservations_usd"] = "5.75"
+        proxy.save()
+    with PortalProxy(credentials, pricing, ledger, allow_local=True, authorized_cap="6.00", reservation_ceiling="6.00") as resumed:
+        assert resumed.ledger["reservations_usd"] == "5.75"
+    with pytest.raises(ValueError, match="incompatible authority"):
+        PortalProxy(credentials, pricing, ledger, allow_local=True)
+    with pytest.raises(ValueError, match="authority"):
+        PortalProxy(credentials, pricing, ledger, allow_local=True, authorized_cap="6.00", reservation_ceiling="6.01")
+
+
 @pytest.mark.parametrize("streaming", [False, True])
 def test_real_tool_response_is_relayed_without_scripting_model_decisions(
     tmp_path, streaming

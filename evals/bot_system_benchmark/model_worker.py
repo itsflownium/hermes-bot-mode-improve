@@ -34,7 +34,7 @@ else:
     )
 
 
-def hermes(args, root: Path, prompts: list[str]) -> dict:
+def hermes(args, root: Path, prompts: list[str], *, tasks=None) -> dict:
     sys.path.insert(0, str(args.source.resolve()))
     from hermes_state import SessionDB
     from run_agent import AIAgent
@@ -43,7 +43,7 @@ def hermes(args, root: Path, prompts: list[str]) -> dict:
     from tests.fakes.fake_llm_provider import write_hermes_home
 
     home, workspace = root / "profile", root / "workspace"
-    seed(workspace, args.case)
+    (tasks.seed if tasks is not None else seed)(workspace, args.case)
     write_hermes_home(
         home, args.base_url, extra_config=OFFLINE_CONFIG + NO_BACKGROUND_REVIEW
     )
@@ -61,7 +61,7 @@ def hermes(args, root: Path, prompts: list[str]) -> dict:
         api_key="fixture-local-only",
         base_url=args.base_url,
         api_mode="chat_completions",
-        enabled_toolsets=["file", "terminal", "todo"],
+        enabled_toolsets=tasks.TOOLSETS if tasks is not None else ["file", "terminal", "todo"],
         quiet_mode=True,
         skip_memory=True,
         skip_context_files=True,
@@ -98,7 +98,7 @@ def hermes(args, root: Path, prompts: list[str]) -> dict:
                     )
                 }
             )
-        grading = grade(workspace, args.case)
+        grading = (tasks.grade if tasks is not None else grade)(workspace, args.case)
         grading["runtime_completed"] = all(
             row.get("failed") is not True for row in turns
         )
