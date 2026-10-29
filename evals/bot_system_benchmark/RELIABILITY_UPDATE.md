@@ -83,7 +83,7 @@ QUALITY_TASKS.md protocol is separate and preserves the older task oracles.
 The single initial import commit remains intentional; the original improvement
 history is preserved in the Hermes draft PR.
 
-## Current local validation
+## Earlier snapshot validation
 
 At source `96fdd6e2`, the fixed 33-file reliability selection on native macOS
 reported **391 passed, 0 failed, 18 skipped** with file retries disabled.
@@ -117,6 +117,40 @@ repeatability runs now target deduplication, native file identity, settled
 message waits and receipt publication. The complete known-file write-baseline
 file remains in the broad selection; the earlier three failures are retained.
 Any failed repetition still fails the job, with file retries disabled.
+
+## Final expanded validation
+
+The [completed public native run](https://github.com/itsflownium/hermes-bot-mode-improve/actions/runs/40810618172)
+passed every job at runtime source `96a9276d`. All 43 selected files ran with
+file retries disabled. Host markers account for different skip counts.
+
+| Native host | Passed | Failed | Skipped |
+|---|---:|---:|---:|
+| Linux (`ubuntu-latest`) | 598 | 0 | 9 |
+| macOS (`macos-15`) | 587 | 0 | 20 |
+| Windows (`windows-latest`) | 582 | 0 | 25 |
+| Local macOS | 587 | 0 | 20 |
+
+Each of the three focused Windows repetitions passed **19 tests, 0 failed,
+2 skipped**. The broad Windows run also passed both actual ACL tests, both
+receipt-publication tests, all three line-ending tests and the complete
+known-file write-baseline file. The two failures from the first public run
+are resolved in this selection. No failed run was replaced or hidden.
+
+All **13 local blocking source checks** passed, with zero code-health findings
+across 23 changed Python files. The final video/evidence package also passed
+the staged blob-size guard. Publication-only commits add assets, receipts and
+documentation after the tested runtime revision; they do not change production
+or test code.
+
+Full logs are retained for [Windows](results/native-windows-96a9276d.log.gz),
+[Linux](results/native-linux-96a9276d.log.gz),
+[macOS](results/native-macos-96a9276d.log.gz),
+[local macOS](results/local-macos-96a9276d.log.gz) and
+[local source checks](results/source-checks-96a9276d.log.gz).
+The [machine-readable summary](results/reliability-validation.json) records
+the runtime revision, manifest hash, counts and every archive's uncompressed hash.
+These selected contracts do not certify the full suite or general model quality.
 
 The [new real-model sample](QUALITY_TASKS.md#recorded-sample-2026-10-29)
 is also retained: baseline 2/2 completed versus candidate 1/2. The last candidate

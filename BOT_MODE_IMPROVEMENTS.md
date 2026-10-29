@@ -27,7 +27,12 @@ The latest changes address concrete failure cases:
 - Fixed native regression selections, complete model receipts and adverse
   results make the validation reproducible and its limits visible.
 
-[Reliability results and limitations](evals/bot_system_benchmark/RELIABILITY_UPDATE.md)
+The final 43-file native selection passed on Windows (**582 passed**), Linux
+(**598 passed**) and macOS (**587 passed**), with zero failures and file retries
+disabled. Three focused Windows repetitions each passed 19 tests. All 13 local
+blocking source checks passed.
+
+[Reliability results and limitations](evals/bot_system_benchmark/RELIABILITY_UPDATE.md#final-expanded-validation)
 describe the native regressions and the difference between local source checks
 and GitHub CI. The full test suite has not been certified by these selections.
 
