@@ -2,9 +2,10 @@
 
 This repository contains the full Hermes source, including the Bot Mode work
 imported from source `40a67099`, plus the Windows and answer-review follow-up
-on `fix/bot-mode-reliability`. The import commit `6ea5c928` has exactly the same
-file tree as that source revision. The draft PR keeps subsequent changes
-reviewable against that imported baseline.
+merged into `main` in [PR #1](https://github.com/itsflownium/hermes-bot-mode-improve/pull/1).
+The import commit `6ea5c928` has exactly the same file tree as that source
+revision. The merged PR preserves the review of subsequent changes against
+that imported baseline.
 
 The latest changes address concrete failure cases:
 
